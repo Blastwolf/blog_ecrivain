@@ -9,8 +9,8 @@
 <body>
 <nav class="navbar">
     <ul class="navbar-menu">
-        <li><a href="#">Accueil</a></li>
-        <li><a href="#">Articles</a></li>
+        <li><a href="index.php">Accueil</a></li>
+        <li><a href="index.php?action=posts">Articles</a></li>
         <li><a href="#">Connexion</a></li>
     </ul>
 </nav>
