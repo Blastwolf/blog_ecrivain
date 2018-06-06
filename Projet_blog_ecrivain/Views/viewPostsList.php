@@ -10,6 +10,7 @@ while ($data = $posts->fetch()) {
     </article>
 
     <?php
+    echo (dirname(__FILE__));
 }
 $content = ob_get_clean();
 require 'template.php';
