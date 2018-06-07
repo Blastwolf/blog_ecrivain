@@ -1,10 +1,7 @@
 <?php
 session_start();
-
+define('ROOT', dirname(__FILE__));
 require dirname(__FILE__) . '/controllers/test.php';
-$path = $_SERVER['DOCUMENT_ROOT'] . '/Projet_site_ecrivain/Views/viewAccueil.php';
-$path_2 = dirname($_SERVER['DOCUMENT_ROOT']);
-echo dirname(__FILE__);
 
 
 if (isset($_GET['action'])) {
@@ -14,30 +11,19 @@ if (isset($_GET['action'])) {
         showPost($_GET['id']);
     } elseif ($_GET['action'] == 'connect') {
         if (isset($_POST['register'])) {
-            addUsers($_POST['user-name-register'], $_POST['user-pass-register']);
+            addUsers($_POST['user-name-register'], $_POST['user-pass-register'], $_POST['user-pass-register-verif']);
         } elseif (isset($_POST['connect'])) {
             connectUser($_POST['user-name'], $_POST['user-pass']);
         }
         showConnect();
+    } elseif ($_GET['action'] == 'deconnect') {
+        deconnectUser();
+        showAccueil();
+    } elseif ($_GET['action'] == 'admin') {
+        showBackend();
+    } elseif ($_GET['action'] == 'editPost') {
     }
 } else {
     showAccueil();
 }
 
-
-//    showPost($_GET['id']);
-//} elseif (isset($_GET['action']) && ($_GET['action'] == 'connect')) {
-//    require 'views/viewConnectRegister.php';
-//} else {
-//    if (isset($_POST['register'])) {
-//        if (isValid($_POST['user-name-register'], $_POST['user-pass-register'])) {
-//            addUsers($_POST['user-name-register'], $_POST['user-pass-register']);
-//            echo 'added';
-//        }else{
-//            require 'views/viewConnectRegister.php';
-//        }
-//    }
-//    showPosts();
-//
-//}
-//header('Location:Views/viewAccueil.php');

@@ -9,7 +9,10 @@ ob_start();
     </article>
 
     <div class="comments">
-        <p>Commentaires : </p>
+        <p>Commentaires :
+            <?php if (isset($_SESSION['user'])) {
+                echo('<span class="ifLogged"><a href="#">Ajouter</a></span>');
+            } ?></p>
         <?php while ($data = $comments->fetch()) { ?>
             <div class="comment">
                 <p class="comment-author">Par <?= $data['author'] ?> le <?= $data['creation_date_fr'] ?></p>
@@ -21,4 +24,4 @@ ob_start();
     </div>
 <?php
 $content = ob_get_clean();
-require 'template.php';
+require ROOT . '/views/template.php';

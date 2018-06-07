@@ -1,23 +1,155 @@
-html,body{width: 100%;height: 100%;}
-*{padding: 0;margin: 0;}
+html, body {
+    width: 100%;
+    height: 100%;
+}
 
-.navbar {border:2px solid black;height: 70px;margin-bottom: 100px;}
-.navbar-menu{display:flex;list-style: none;}
-.navbar-menu a{display:block;width: 70px;margin: 10px;border:2px solid black;padding: 8px;text-align: center;text-decoration: none;}
+* {
+    padding: 0;
+    margin: 0;
+}
 
+.navbar {
+    border: 2px solid black;
+    height: 70px;
+    margin-bottom: 100px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
 
-.article{width: 70%;box-shadow:0px 0px 5px black;margin: auto auto 50px;padding: 20px;}
-.article h3{text-align: center;color:deepskyblue;margin-bottom: 20px;font-size: 38px;}
-.date{display: block;margin:20px auto 5px;font-weight: 700;text-align: right;}
+.navbar-menu {
+    display: flex;
+    list-style: none;
+}
 
-.comments {width:70%;box-shadow:0px 0px 5px black;margin: auto auto 50px;padding: 10px;background-color: blanchedalmond;}
-.comments p{margin:10px;}
-.comment {width: 95%;box-shadow:0px 0px 5px black;padding: 5px;margin:10px;background-color: white;}
+.navbar-menu a {
+    display: block;
+    margin: 10px;
+    border: 2px solid black;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+}
 
+.welcomeUser {
+    margin: auto 0;
+}
+
+.article {
+    width: 70%;
+    box-shadow: 0px 0px 5px black;
+    margin: auto auto 50px;
+    padding: 20px;
+}
+
+.article h3 {
+    text-align: center;
+    color: deepskyblue;
+    margin-bottom: 20px;
+    font-size: 38px;
+}
+
+.date {
+    display: block;
+    margin: 20px auto 5px;
+    font-weight: 700;
+    text-align: right;
+}
+
+.comments {
+    width: 70%;
+    box-shadow: 0px 0px 5px black;
+    margin: auto auto 50px;
+    padding: 10px;
+    background-color: blanchedalmond;
+}
+
+.comments p {
+    margin: 10px;
+}
+
+.comment {
+    width: 95%;
+    box-shadow: 0px 0px 5px black;
+    padding: 5px;
+    margin: 10px;
+    background-color: white;
+}
+
+.ifLogged {
+    float: right;
+}
 
 /*--------------------CONNECTION/REGISTER--------------------------*/
-.connectRegister-Wrapper {display: flex;justify-content: space-around;}
-.connectRegister-Wrapper h2{text-align: center;}
-.connectRegister-Wrapper .connect,.register{box-shadow:0px 0px 5px black;padding: 10px;margin:15px;}
-.connectRegister-Wrapper label{width: 150px;text-align: right;display: inline-block;margin-right: 3px;}
-.connectRegister-Wrapper label,input{margin-bottom: 5px;}
+.connectRegister-Wrapper {
+    display: flex;
+    justify-content: space-around;
+}
+
+.connectRegister-Wrapper h2 {
+    text-align: center;
+}
+
+.connectRegister-Wrapper .connect, .register {
+    box-shadow: 0px 0px 5px black;
+    padding: 10px;
+    margin: 15px;
+}
+
+.connectRegister-Wrapper label {
+    width: 150px;
+    text-align: right;
+    display: inline-block;
+    margin-right: 3px;
+}
+
+.connectRegister-Wrapper label, input {
+    margin-bottom: 5px;
+}
+
+/*--------------BACKEND ACCUEIL CSS-------------*/
+.backendPosts {
+    box-shadow: 0px 0px 5px black;
+    width: 70%;
+    margin: auto;
+    padding: 20px 20px 10px;
+}
+
+.backend-Section-Title {
+    font-size: 38px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.backendPost-wrapper {
+    display: flex;
+    align-items: baseline;
+    align-content: space-evenly;
+    justify-content: center;
+}
+
+.backendPost-wrapper .article {
+
+    width: auto;
+    position: relative;
+    z-index: 0;
+}
+
+.backendPost-option {
+    box-shadow: 3px 0px 5px black;
+    padding: 20px;
+    list-style: none;
+    position: relative;
+    left: -2px;
+    z-index: 99;
+    height: 70px;
+    background-color: bisque;
+}
+
+.backendPost-option li {
+    margin: 5px;
+}
+
+.backendPost-option button {
+    padding: 3px;
+}
