@@ -2,10 +2,16 @@
 $title = 'Edition de billet';
 ob_start(); ?>
     <div class="edit-post-wrapper">
-        <form method="POST" action="#">
-            <textarea name="editPost" id="mytinymce" value="<?php if (isset($post)) {
-                echo $post;
-            } ?>"></textarea>
+        <form method="POST" action="index.php?action=updatePost&amp;id=<?= $post['id']; ?>">
+            <label for="editPostTitle">Titre de l'article :</label><input type="text" name="editPostTitle"
+                                                                          class="mytextarea"
+                                                                          value="<?php if (isset($post)) {
+                                                                              echo htmlspecialchars($post["title"]);
+                                                                          } ?>">
+            <textarea name="editPostContent" id="mytextarea"><?php if (isset($post)) {
+                    echo nl2br(htmlspecialchars($post["content"]));
+                } ?></textarea>
+            <input type="submit" name="updatePost" id="updateButton">
         </form>
         <?php while ($data = $comments->fetch()) { ?>
             <div class="comment">

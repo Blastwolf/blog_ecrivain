@@ -7,7 +7,7 @@ function showPosts()
 {
     $postManager = new PostManager();
     $posts = $postManager->getPosts();
-    require 'views/viewPostsList.php';
+    require ROOT . '/views/viewPostsList.php';
 }
 
 function showPost($postId)
@@ -16,26 +16,41 @@ function showPost($postId)
     $commentManager = new CommentManager();
     $post = $postManager->getPost($postId);
     $comments = $commentManager->getComments($postId);
-    require 'views/viewPost.php';
+    require ROOT . '/views/viewPost.php';
 }
 
 function showEditPost($postId)
 {
-    $postManager = new PostManager();
-    $commentManager = new CommentManager();
-    $post = $postManager->getPost($postId);
-    $comments = $commentManager->getComments($postId);
-    require 'views/backend/viewEditPost.php';
+    if (isset($_SESSION['user']) && ($_SESSION['user'] == 'admin')) {
+        $postManager = new PostManager();
+        $commentManager = new CommentManager();
+        $post = $postManager->getPost($postId);
+        $comments = $commentManager->getComments($postId);
+        require ROOT . '/views/backend/viewEditPost.php';
+    } else {
+        echo 'Vous n\'avez pas accés à cette page <a href="index.php">Retourner à la page d\'Accueil</a>';
+    }
+}
+
+function updatePost($title, $content, $postId)
+{
+    if (isset($_SESSION['user']) && ($_SESSION['user'] == 'admin')) {
+        $postManager = new PostManager();
+        $postManager->updatePost($title, $content, $postId);
+        showBackend();
+        echo 'la news a bien etait update';
+    }
+
 }
 
 function showConnect()
 {
-    require 'views/viewConnectRegister.php';
+    require ROOT . '/views/viewConnectRegister.php';
 }
 
 function showAccueil()
 {
-    require 'views/viewAccueil.php';
+    require ROOT . '/views/viewAccueil.php';
 }
 
 function showBackend()
@@ -44,9 +59,10 @@ function showBackend()
     $postManager = new PostManager();
     $posts = $postManager->getPosts();
     if (isset($_SESSION['user']) && ($_SESSION['user'] == 'admin')) {
-        require 'views/backend/viewBackend.php';
+        require ROOT . '/views/backend/viewBackend.php';
+    } else {
+        echo 'Vous n\'avez pas accés à cette page <a href="index.php">Retourner à la page d\'Accueil</a>';
     }
-    echo 'Vous n\'avez pas accés à cette page <a href="index.php">Retourner à la page d\'Accueil</a>';
 }
 
 
@@ -57,12 +73,12 @@ function connectUser($userName, $password)
     $isPasswordCorrect = password_verify($password, $result['pass']);
     if ($isPasswordCorrect && $connectResgisterManager->validUser($userName)) {
         $_SESSION['user'] = $userName;
-        require 'views /viewAccueil.php';
+        require ROOT . '/views/viewAccueil.php';
 
     } else {
         echo('test comprend pas');
         $messCon = 'invalide utilisateur password';
-        require 'views /viewConnectRegister.php';
+        require ROOT . '/views/viewConnectRegister.php';
     }
 
 }
@@ -87,14 +103,14 @@ function addUsers($userName, $pass, $verif_pass)
         /*--------On test si le pseudo est deja prit------------*/
         if (!$connectResgisterManager->validUser($userNameSafe)) {
             $connectResgisterManager->addUser($userNameSafe, $pass_hash);
-            require 'views /viewAccueil.php';
+            require ROOT . '/views/viewAccueil.php';
         } else {
             $messReg = 'Cet nom d\'utilisateur est déjà prit';
-            require 'views/viewConnectRegister.php';
+            require ROOT . '/views/viewConnectRegister.php';
         }
     } else {
         $messReg = 'Mot de passe différents';
-        require 'views/viewConnectRegister.php';
+        require ROOT . '/views/viewConnectRegister.php';
     }
 
 

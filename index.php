@@ -22,6 +22,9 @@ if (isset($_GET['action'])) {
     } elseif ($_GET['action'] == 'admin') {
         showBackend();
     } elseif ($_GET['action'] == 'editPost') {
+        showEditPost($_GET['id']);
+    } elseif ($_GET['action'] == 'updatePost') {
+        updatePost($_POST['editPostTitle'], $_POST['editPostContent'], $_GET['id']);
     }
 } else {
     showAccueil();
