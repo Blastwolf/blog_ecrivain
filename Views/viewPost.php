@@ -4,7 +4,7 @@ ob_start();
 ?>
     <article class="article">
         <h3><?= htmlspecialchars($post['title']) ?></h3>
-        <p><?= nl2br(htmlspecialchars($post['content'])) ?></p>
+        <div><?= $post['content'] ?></div>
         <em class="date"> Le : <?= $post['creation_date_fr'] ?></em>
     </article>
 
