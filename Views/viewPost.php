@@ -15,7 +15,10 @@ ob_start();
             } ?></p>
         <?php while ($data = $comments->fetch()) { ?>
             <div class="comment">
-                <p class="comment-author">Par <?= $data['author'] ?> le <?= $data['creation_date_fr'] ?></p>
+                <p class="comment-author">Par <?= $data['author'] ?> le <?= $data['creation_date_fr'] ?>
+                    <?php if (isset($_SESSION['user'])) {
+                        echo '<span><a href="index.php?action=signaler&amp;id=' . $data['id'] . '&amp;postId=' . $post['id'] . '">Signaler</a></span>';
+                    } ?></p>
                 <p><?= $data['content'] ?></p>
             </div>
             <?php

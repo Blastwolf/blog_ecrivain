@@ -23,7 +23,9 @@ if (isset($_GET['action'])) {
             // $connect = new ConnectRegisterController($_POST['user-name'], $_POST['user-pass']);
             //$connect->connectUser();
         }
-        showConnect();
+        ViewFrontendController::showConnect();
+    } elseif ($_GET['action'] == 'signaler') {
+        ViewFrontendController::showPostAfterReport($_GET['id'], $_GET['postId']);
     } elseif ($_GET['action'] == 'deconnect') {
         //deconnectUser();
         ConnectRegisterController::deconnectUser();

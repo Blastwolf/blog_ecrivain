@@ -35,6 +35,26 @@ class ViewFrontendController
         }
     }
 
+    static public function showPostAfterReport($commentId, $postId)
+    {
+        if (isset($_SESSION['user'])) {
+            $commentManager = new CommentManager();
+            $tempReportUserArray = $commentManager->getReportUsers($commentId);
+            print_r($tempReportUserArray);
+            if (!in_array($_SESSION['user'], $tempReportUserArray)) {
+                $tempReportUserArray[] = $_SESSION['user'];
+                echo $_SESSION['user'];
+                $reportUserArray = implode(',', $tempReportUserArray);
+                print_r($reportUserArray);
+                echo $commentId;
+                $commentManager->reportComment($commentId, $reportUserArray);
+            } else {
+                echo 'Vous avez deja signalé ce commentaire';
+            }
+            self::showPost($postId);
+        }
+    }
+
     public static function showConnect()
     {
         require ROOT . '/views/viewConnectRegister.php';
