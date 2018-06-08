@@ -1,10 +1,13 @@
 <?php
 
-class Manager {
+class Manager
+{
+    protected $db;
 
-    protected function dbConnect(){
-        $db = new PDO('mysql:host=localhost;dbname=blog_ecrivain;charset=utf8', 'root', '');
-        return $db;
+    protected function dbConnect()
+    {
+        return $this->db = new PDO('mysql:host=localhost;dbname=blog_ecrivain;charset=utf8', 'root', '');
+
     }
 
 }
