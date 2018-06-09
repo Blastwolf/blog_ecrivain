@@ -80,6 +80,18 @@ html, body {
     float: right;
 }
 
+.comment-sign {
+    color: green;
+    float: right;
+}
+
+.commentForm textarea {
+    width: 80%;
+    height: 250px;
+    margin: auto;
+    display: block;
+}
+
 /*--------------------CONNECTION/REGISTER--------------------------*/
 .connectRegister-Wrapper {
     display: flex;

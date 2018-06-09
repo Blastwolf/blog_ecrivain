@@ -14,20 +14,16 @@ if (isset($_GET['action'])) {
         ViewFrontendController::showPost($_GET['id']);
     } elseif ($_GET['action'] == 'connect') {
         if (isset($_POST['register'])) {
-            //addUsers($_POST['user-name-register'], $_POST['user-pass-register'], $_POST['user-pass-register-verif']);
             ConnectRegisterController::addUser($_POST['user-name-register'], $_POST['user-pass-register'], $_POST['user-pass-register-verif']);
-
         } elseif (isset($_POST['connect'])) {
-            // connectUser($_POST['user-name'], $_POST['user-pass']);
             ConnectRegisterController::connectUser($_POST['user-name'], $_POST['user-pass']);
-            // $connect = new ConnectRegisterController($_POST['user-name'], $_POST['user-pass']);
-            //$connect->connectUser();
         }
         ViewFrontendController::showConnect();
+    } elseif ($_GET['action'] == 'postComment') {
+        ViewFrontendController::showPostAfterPostComment($_GET['id'], $_SESSION['user'], $_POST['commentContent']);
     } elseif ($_GET['action'] == 'signaler') {
         ViewFrontendController::showPostAfterReport($_GET['id'], $_GET['postId']);
     } elseif ($_GET['action'] == 'deconnect') {
-        //deconnectUser();
         ConnectRegisterController::deconnectUser();
         ViewFrontendController::showAccueil();
     } elseif ($_GET['action'] == 'admin') {

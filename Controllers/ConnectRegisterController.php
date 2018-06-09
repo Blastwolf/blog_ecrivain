@@ -15,7 +15,6 @@ class ConnectRegisterController
             require ROOT . '/views/viewAccueil.php';
 
         } else {
-            echo('test comprend pas');
             $messCon = 'invalide utilisateur password';
             require ROOT . '/views/viewConnectRegister.php';
         }

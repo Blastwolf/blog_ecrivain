@@ -7,11 +7,18 @@ class CommentManager extends Manager
     public function getComments($postId)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT id, post_id, author, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr
-			FROM comments WHERE post_id = ?');
+        $req = $db->prepare('SELECT id, post_id, author, content, reported, report_users ,DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr
+			FROM comments WHERE post_id = ? ORDER BY creation_date ASC');
         $req->execute([$postId]);
 
         return $req;
+    }
+
+    public function postComment($postId, $author, $content)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('INSERT INTO comments(post_id, author, content)VALUES(?,?,?)');
+        $req->execute([$postId, $author, $content]);
     }
 
     public function reportComment($id, $userReport)

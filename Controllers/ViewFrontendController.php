@@ -19,7 +19,18 @@ class ViewFrontendController
         $commentManager = new CommentManager();
         $post = $postManager->getPost($postId);
         $comments = $commentManager->getComments($postId);
+        $data = $comments->fetchAll(PDO::FETCH_ASSOC);
+
+        if (isset($_SESSION['user'])) {
+            foreach ($data as $key => $value) {
+                $tempReportUserArray = $commentManager->getReportUsers($data[$key]['id']);
+                if (in_array($_SESSION['user'], $tempReportUserArray)) {
+                    ${"messSign" . $data[$key]['id']} = 'Vous avez  signalé ce commentaire';
+                }
+            }
+        }
         require ROOT . '/views/viewPost.php';
+
     }
 
     static public function showEditPost($postId)
@@ -40,7 +51,6 @@ class ViewFrontendController
         if (isset($_SESSION['user'])) {
             $commentManager = new CommentManager();
             $tempReportUserArray = $commentManager->getReportUsers($commentId);
-            print_r($tempReportUserArray);
             if (!in_array($_SESSION['user'], $tempReportUserArray)) {
                 $tempReportUserArray[] = $_SESSION['user'];
                 echo $_SESSION['user'];
@@ -48,9 +58,16 @@ class ViewFrontendController
                 print_r($reportUserArray);
                 echo $commentId;
                 $commentManager->reportComment($commentId, $reportUserArray);
-            } else {
-                echo 'Vous avez deja signalé ce commentaire';
             }
+            self::showPost($postId);
+        }
+    }
+
+    static public function showPostAfterPostComment($postId, $author, $content)
+    {
+        if (isset($_SESSION['user'])) {
+            $commentManager = new CommentManager();
+            $commentManager->postComment($postId, $author, $content);
             self::showPost($postId);
         }
     }
