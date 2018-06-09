@@ -40,7 +40,14 @@ class CommentManager extends Manager
         var_dump($result[0]);
         return explode(',', $result[0]);
 
+    }
 
+    public function getReportedComments()
+    {
+        $db = $this->dbConnect();
+        $req = $db->query('SELECT * FROM comments WHERE reported >=1 ORDER BY reported DESC');
+
+        return $req;
     }
 
 }

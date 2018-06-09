@@ -165,3 +165,19 @@ html, body {
 .backendPost-option button {
     padding: 3px;
 }
+
+.button-group {
+    float: right;
+}
+
+.button-group button {
+    margin: auto 20px auto;
+}
+
+.backendComment {
+    box-shadow: 0px 0px 5px black;
+    width: 70%;
+    margin: 20px auto auto;
+    padding: 20px 20px 10px;
+
+}

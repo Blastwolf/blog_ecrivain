@@ -29,7 +29,7 @@ if (isset($_GET['action'])) {
     } elseif ($_GET['action'] == 'admin') {
         ViewBackendController::showBackend();
     } elseif ($_GET['action'] == 'editPost') {
-        ViewFrontendController::showEditPost($_GET['id']);
+        ViewBackendController::showEditPost($_GET['id']);
     } elseif ($_GET['action'] == 'updatePost') {
         ViewBackendController::updatePost($_POST['editPostTitle'], $_POST['editPostContent'], $_GET['id']);
     }

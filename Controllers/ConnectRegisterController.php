@@ -13,7 +13,6 @@ class ConnectRegisterController
         if ($isPasswordCorrect && $connectResgisterManager->validUser($userName)) {
             $_SESSION['user'] = $userName;
             require ROOT . '/views/viewAccueil.php';
-
         } else {
             $messCon = 'invalide utilisateur password';
             require ROOT . '/views/viewConnectRegister.php';
