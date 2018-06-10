@@ -13,10 +13,10 @@
         } ?></p>
     <ul class="navbar-menu">
         <?php if (isset($_SESSION['user']) && ($_SESSION['user'] == 'admin')) {
-            echo '<li><a href="index.php?action=admin">Administration</a></li>';
+            echo '<li><a href="index.php?action=admin&amp;nbPagePost=1&amp;nbPageComment=1">Administration</a></li>';
         } ?>
         <li><a href="index.php">Accueil</a></li>
-        <li><a href="index.php?action=posts">Articles</a></li>
+        <li><a href="index.php?action=posts&amp;nbPage=1">Articles</a></li>
         <li><?php if (isset($_SESSION['user'])) {
                 echo '<a href="index.php?action=deconnect">Déconnection</a>';
             } else {

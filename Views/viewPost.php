@@ -9,10 +9,7 @@ ob_start();
     </article>
 
     <div class="comments">
-        <p>Commentaires :
-            <?php if (isset($_SESSION['user'])) {
-                echo('<span class="ifLogged"><a href="#">Ajouter</a></span>');
-            } ?></p>
+        <h2>Commentaires :</h2>
         <?php foreach ($data as $key => $value) {
             ?>
             <div class="comment">
@@ -30,7 +27,7 @@ ob_start();
             <?php
         }
         ?>
-        <p>Poster un commentaire :</p>
+        <h2>Poster un commentaire :</h2>
         <div class="comment commentForm">
             <form method="POST" action="index.php?action=postComment&amp;id=<?= $post['id'] ?>">
                 <textarea name="commentContent" placeholder="Ecrivez votre commentaire ici"></textarea><br/>

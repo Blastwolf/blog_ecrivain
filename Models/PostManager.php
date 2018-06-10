@@ -4,11 +4,13 @@ require_once 'Manager.php';
 class PostManager extends Manager
 {
 
-    public function getPosts()
+    public function getPosts($start)
     {
         $db = $this->dbConnect();
-        $req = $db->query('SELECT id,title,content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\')
-                            AS creation_date_fr FROM posts ORDER BY creation_date DESC LIMIT 0,5');
+        $req = $db->prepare('SELECT id,title,content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\')
+                            AS creation_date_fr FROM posts ORDER BY creation_date DESC LIMIT :start, 5');
+        $req->bindParam(':start', $start, PDO::PARAM_INT);
+        $req->execute();
         return $req;
     }
 
@@ -23,6 +25,14 @@ class PostManager extends Manager
         return $post;
     }
 
+    public function addPost($title, $content)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('INSERT INTO posts (title,content)VALUES(:title,:content)');
+        $req->execute([':title' => $title, ':content' => $content]);
+
+    }
+
     public function updatePost($title, $content, $postId)
     {
         $db = $this->dbConnect();
@@ -31,4 +41,17 @@ class PostManager extends Manager
         return $req;
     }
 
+    public function deletePost($postId)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('DELETE FROM posts WHERE id = :id');
+        $req->execute([':id' => $postId]);
+    }
+
+    public function countPost()
+    {
+        $db = $this->dbConnect();
+        $req = $db->query('SELECT COUNT(*) FROM posts');
+        return $req->fetchColumn();
+    }
 }

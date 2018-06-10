@@ -6,10 +6,14 @@ class ViewFrontendController
 {
 
 
-    static public function showPosts()
+    static public function showPosts($currentPageNumber)
     {
+
+        $currentPage = ($currentPageNumber - 1) * 5;
         $postManager = new PostManager();
-        $posts = $postManager->getPosts();
+        $posts = $postManager->getPosts($currentPage);
+        $nbPosts = $postManager->countPost();
+        $nbTotalPages = ceil($nbPosts / 5);
         require ROOT . '/views/viewPostsList.php';
     }
 
@@ -32,7 +36,6 @@ class ViewFrontendController
         require ROOT . '/views/viewPost.php';
 
     }
-
 
     static public function showPostAfterReport($commentId, $postId)
     {
