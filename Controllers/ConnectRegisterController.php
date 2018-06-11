@@ -12,9 +12,9 @@ class ConnectRegisterController
         $isPasswordCorrect = password_verify($password, $result['pass']);
         if ($isPasswordCorrect && $connectResgisterManager->validUser($userName)) {
             $_SESSION['user'] = $userName;
-            require ROOT . '/views/viewAccueil.php';
+            ViewFrontendController::showAccueil();
         } else {
-            $messCon = 'invalide utilisateur password';
+            $messCon = 'Combinaison mot de passe/utilisateur incorrect';
             require ROOT . '/views/viewConnectRegister.php';
         }
 
@@ -38,7 +38,7 @@ class ConnectRegisterController
             /*--------On test si le pseudo est deja prit------------*/
             if (!$connectResgisterManager->validUser($userNameSafe)) {
                 $connectResgisterManager->addUser($userNameSafe, $pass_hash);
-                require ROOT . '/views/viewAccueil.php';
+                ViewFrontendController::showAccueil();
             } else {
                 $messReg = 'Cet nom d\'utilisateur est déjà prit';
                 require ROOT . '/views/viewConnectRegister.php';

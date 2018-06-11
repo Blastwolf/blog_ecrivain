@@ -1,19 +1,33 @@
 <?php
-$title = 'Liste des derniers posts';
+$title = 'Liste des derniers épisodes';
 ob_start();
+?>
+    <section class="posts">
+        <?php while ($data = $posts->fetch()) {
+            ?>
+            <article>
+                <header>
+                    <span class="date"><?= $data['creation_date_fr'] ?></span>
+                    <h2><a href="index.php?action=post&amp;id=<?= $data['id'] ?>"><?= $data['title'] ?></a></h2>
+                </header>
+                <div>
+                    <?= substr($data['content'], 0, 300) ?>
+                </div>
+                <ul class="actions">
+                    <li><a href="index.php?action=post&amp;id=<?= $data['id'] ?>" class="button">Lire la suite</a></li>
+                </ul>
+            </article>
+            <?php
+        }
+        ?>
+        <div class="pagination"><?php
+            for ($i = 1; $i <= $nbTotalPages; $i++) {
+                echo('<a class ="page" href="index.php?action=posts&amp;nbPage=' . $i . '">' . $i . '</a>');
+            } ?>
+        </div>
+    </section>
 
-while ($data = $posts->fetch()) {
-    ?>
 
-    <article class="article">
-        <h3><?= htmlspecialchars($data['title']) ?> <em> Le : <?= $data['creation_date_fr'] ?></em></h3>
-        <div><?= (substr($data['content'], 0, 400)) ?>...
-            <a href="index.php?action=post&amp;id=<?= $data['id'] ?>">Lire la suite</a></div>
-    </article>
-    <?php
-}
-for ($i = 1; $i <= $nbTotalPages; $i++) {
-    echo('<a href="index.php?action=posts&amp;nbPage=' . $i . '">' . $i . '</a>');
-}
+<?php
 $content = ob_get_clean();
 require ROOT . '/views/template.php';

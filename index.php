@@ -46,9 +46,9 @@ if (isset($_GET['action'])) {
     } elseif ($_GET['action'] == 'deletePost') {
         ViewBackendController::deletePost($_GET['id']);
     } elseif ($_GET['action'] == 'editComment') {
-        ViewBackendController::showEditComment($_GET['id']);
+        ViewBackendController::showEditComment($_GET['id'], $_GET['nbPagePost'], $_GET['nbPageComment']);
     } elseif ($_GET['action'] == 'moderateComment') {
-        ViewBackendController::moderateComment($_GET['id'], $_POST['moderatedComment']);
+        ViewBackendController::moderateComment($_GET['id'], $_POST['moderatedComment'], $_GET['nbPagePost'], $_GET['nbPageComment']);
     }
 //---------------------------------------------------------------------------//
 } else {

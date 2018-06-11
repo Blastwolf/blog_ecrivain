@@ -7,8 +7,8 @@ class PostManager extends Manager
     public function getPosts($start)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT id,title,content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\')
-                            AS creation_date_fr FROM posts ORDER BY creation_date DESC LIMIT :start, 5');
+        $req = $db->prepare('SELECT id,title,content, DATE_FORMAT(creation_date, \'%d/%m/%Y\')
+                            AS creation_date_fr FROM posts ORDER BY creation_date DESC LIMIT :start, 4');
         $req->bindParam(':start', $start, PDO::PARAM_INT);
         $req->execute();
         return $req;
@@ -17,12 +17,20 @@ class PostManager extends Manager
     public function getPost($postId)
     {
         $db = $this->dbconnect();
-        $req = $db->prepare('SELECT id,title,content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\')
+        $req = $db->prepare('SELECT id,title,content, DATE_FORMAT(creation_date, \'%d/%m/%Y\')
                             AS creation_date_fr FROM posts WHERE id = ?');
         $req->execute([$postId]);
 
         $post = $req->fetch();
         return $post;
+    }
+
+    public function getLastPost()
+    {
+        $db = $this->dbconnect();
+        $req = $db->query('SELECT *,MAX(id), DATE_FORMAT(creation_date, \'%d/%m/%Y\')
+                            AS creation_date_fr FROM posts');
+        return $req->fetch();
     }
 
     public function addPost($title, $content)

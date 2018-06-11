@@ -19,7 +19,7 @@ class CommentManager extends Manager
 
     public function getComments($postId)
     {
-        $req = $this->db->prepare('SELECT id, post_id, author, content, reported, report_users ,DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr
+        $req = $this->db->prepare('SELECT id, post_id, author, content, reported, report_users ,DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr
 			FROM comments WHERE post_id = ? ORDER BY creation_date ASC');
         $req->execute([$postId]);
 
@@ -54,7 +54,6 @@ class CommentManager extends Manager
         $req = $this->db->prepare('SELECT report_users FROM comments WHERE id = ?');
         $req->execute([$safeId]);
         $result = $req->fetch();
-        var_dump($result[0]);
         return explode(',', $result[0]);
 
     }
