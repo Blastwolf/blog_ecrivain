@@ -3,33 +3,32 @@ require_once 'Manager.php';
 
 class CommentManager extends Manager
 {
-    function __construct()
-    {
-        $this->db = $this->dbConnect();
-    }
-
 
     public function getComment($commentId)
     {
+        $commentIdSafe = htmlspecialchars($commentId);
         $req = $this->db->prepare('SELECT * FROM comments WHERE id = ? ');
-        $req->execute([$commentId]);
+        $req->execute([$commentIdSafe]);
 
         return $req->fetch();
     }
 
     public function getComments($postId)
     {
+        $postIdSafe = htmlspecialchars($postId);
         $req = $this->db->prepare('SELECT id, post_id, author, content, reported, report_users ,DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr
 			FROM comments WHERE post_id = ? ORDER BY creation_date ASC');
-        $req->execute([$postId]);
+        $req->execute([$postIdSafe]);
 
         return $req;
     }
 
     public function postComment($postId, $author, $content)
     {
+        $postIdSafe = htmlspecialchars($postId);
+        $contentSafe = htmlspecialchars($content);
         $req = $this->db->prepare('INSERT INTO comments(post_id, author, content)VALUES(?,?,?)');
-        $req->execute([$postId, $author, $content]);
+        $req->execute([$postIdSafe, $author, $contentSafe]);
     }
 
     public function updateComment($commentId, $commentContent)
@@ -58,16 +57,17 @@ class CommentManager extends Manager
 
     }
 
-    public function getReportedComments($start)
+    public function getReportedComments($startIndex)
     {
+
         $req = $this->db->prepare('SELECT * FROM comments ORDER BY reported DESC LIMIT :start,5');
-        $req->bindParam(':start', $start, PDO::PARAM_INT);
+        $req->bindParam(':start', $startIndex, PDO::PARAM_INT);
         $req->execute();
 
         return $req;
     }
 
-    public function countPost()
+    public function countComment()
     {
         $req = $this->db->query('SELECT COUNT(*) FROM comments');
         return $req->fetchColumn();

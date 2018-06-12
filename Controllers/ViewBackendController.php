@@ -4,27 +4,35 @@ require_once ROOT . '/models/CommentManager.php';
 
 class ViewBackendController
 {
-    const actualBackendPostPage = 0;
+    private $nbTotalPostPage;
+    private $nbTotalCommentPage;
+    private $postManager;
+    private $commentManager;
 
-    public static function showBackend($currentPageNumberPost = 1, $currentPageNumberComment = 1)
+    function __construct()
     {
-        if (isset($_SESSION['user']) && ($_SESSION['user'] == 'admin')) {
-            $currentPagePost = ($currentPageNumberPost - 1) * 4;
-            $currentPageComment = ($currentPageNumberComment - 1) * 5;
-            $postManager = new PostManager();
-            $commentManager = new CommentManager();
-            $posts = $postManager->getPosts($currentPagePost);
-            $comments = $commentManager->getReportedComments($currentPageComment);
-            $nbComments = $commentManager->countPost();
-            $nbPosts = $postManager->countPost();
-            $nbTotalCommentPage = ceil($nbComments / 5);
-            $nbTotalPostPage = ceil($nbPosts / 4);
-            echo $nbTotalPostPage . $nbTotalCommentPage;
-            require ROOT . '/views/backend/viewBackend.php';
+        $this->postManager = new PostManager();
+        $this->commentManager = new CommentManager();
 
-        } else {
-            echo 'Vous n\'avez pas accés à cette page <a href="index.php">Retourner à la page d\'Accueil</a>';
-        }
+        $this->nbTotalPostPage = ceil($this->postManager->countPost() / 4);
+        $this->nbTotalCommentPage = ceil($this->commentManager->countComment() / 5);
+    }
+
+
+    public function showBackend($currentPageNumberPost = 1, $currentPageNumberComment = 1)
+    {
+        $currentPagePost = ($currentPageNumberPost - 1) * 4;
+        $currentPageComment = ($currentPageNumberComment - 1) * 5;
+        //$postManager = new PostManager();
+        //$commentManager = new CommentManager();
+        $posts = $this->postManager->getPosts($currentPagePost);
+        $comments = $this->commentManager->getReportedComments($currentPageComment);
+        //$nbComments = $commentManager->countComment();
+        //$nbPosts = $postManager->countPost();
+        //$nbTotalCommentPage = ceil($nbComments / 5);
+        //$nbTotalPostPage = ceil($nbPosts / 4);
+        require ROOT . '/views/backend/viewBackend.php';
+
     }
 
 
@@ -83,29 +91,22 @@ class ViewBackendController
         }
     }
 
-    public static function showEditComment($commentId, $currentPageNumberPost, $currentPageNumberComment)
+    public function showEditComment($commentId, $currentPageNumberPost, $currentPageNumberComment)
     {
-        if (isset($_SESSION['user']) && ($_SESSION['user'] == 'admin')) {
-            $currentPagePost = ($currentPageNumberPost - 1) * 4;
-            $currentPageComment = ($currentPageNumberComment - 1) * 5;
-            $postManager = new PostManager();
-            $commentManager = new CommentManager();
-            $posts = $postManager->getPosts($currentPagePost);
-            $comments = $commentManager->getReportedComments($currentPageComment);
-            $nbComments = $commentManager->countPost();
-            $nbPosts = $postManager->countPost();
-            $nbTotalCommentPage = ceil($nbComments / 5);
-            $nbTotalPostPage = ceil($nbPosts / 4);
-            $moderateComment = $commentManager->getComment($commentId);
-            echo('le commentaire avec id :' . $moderateComment['id'] . 'a bien etait moderer');
-            require ROOT . '/views/backend/viewBackend.php';
-        }
+        $currentPagePost = ($currentPageNumberPost - 1) * 4;
+        $currentPageComment = ($currentPageNumberComment - 1) * 5;
+
+        $posts = $this->postManager->getPosts($currentPagePost);
+        $comments = $this->commentManager->getReportedComments($currentPageComment);
+        $moderateComment = $this->commentManager->getComment($commentId);
+
+        require ROOT . '/views/backend/viewBackend.php';
     }
 
-    public static function moderateComment($commentId, $commentContent, $currentPageNumberPost, $currentPageNumberComment)
+
+    public function moderateComment($commentId, $commentContent, $currentPageNumberPost, $currentPageNumberComment)
     {
-        $commentManager = new CommentManager();
-        $commentManager->updateComment($commentId, $commentContent);
-        self::showBackend($currentPageNumberPost, $currentPageNumberComment);
+        $this->commentManager->updateComment($commentId, $commentContent);
+        $this->showBackend($currentPageNumberPost, $currentPageNumberComment);
     }
 }

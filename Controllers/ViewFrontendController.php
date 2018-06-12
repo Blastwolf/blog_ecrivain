@@ -4,74 +4,75 @@ require_once ROOT . '/models/CommentManager.php';
 
 class ViewFrontendController
 {
+    private $postManager;
+    private $commentManager;
 
 
-    static public function showPosts($currentPageNumber = 1)
+    function __construct()
     {
+        $this->postManager = new PostManager();
+        $this->commentManager = new CommentManager();
+    }
 
+
+    public function showPosts($currentPageNumber = 1)
+    {
         $currentPage = ($currentPageNumber - 1) * 4;
-        $postManager = new PostManager();
-        $posts = $postManager->getPosts($currentPage);
-        $nbPosts = $postManager->countPost();
+        $posts = $this->postManager->getPosts($currentPage);
+        $nbPosts = $this->postManager->countPost();
         $nbTotalPages = ceil($nbPosts / 4);
         require ROOT . '/views/viewPostsList.php';
     }
 
-    static public function showPost($postId)
+    public function showPost($postId)
     {
-        $postManager = new PostManager();
-        $commentManager = new CommentManager();
-        $post = $postManager->getPost($postId);
-        $comments = $commentManager->getComments($postId);
+        $post = $this->postManager->getPost($postId);
+        $comments = $this->commentManager->getComments($postId);
         $data = $comments->fetchAll(PDO::FETCH_ASSOC);
-
+        //Si l'utilisateur est connecté on vérifie si il fait partie des personnes qui on signalé un commentaire , si oui on lui dit qu'il à signalé le commentaire
         if (isset($_SESSION['user'])) {
-            foreach ($data as $key => $value) {
-                $tempReportUserArray = $commentManager->getReportUsers($data[$key]['id']);
+            foreach ($data as $value) {
+                $tempReportUserArray = $this->commentManager->getReportUsers($value['id']);
                 if (in_array($_SESSION['user'], $tempReportUserArray)) {
-                    ${"messSign" . $data[$key]['id']} = 'Vous avez  signalé ce commentaire';
+                    //On cree une variable dynamique qui se crée avec l'id du comment qui contient le nom de l'utilisateur dans sont tableau de report ,
+                    // pour pouvoir l'afficher dans la vue et signalé que cette utilisateur à signalé ce commentaire .
+                    ${"messSign" . $value['id']} = 'Vous avez  signalé ce commentaire';
                 }
             }
         }
         require ROOT . '/views/viewPost.php';
     }
 
-    static public function showPostAfterReport($commentId, $postId)
+    public function showPostAfterReport($commentId, $postId)
     {
         if (isset($_SESSION['user'])) {
-            $commentManager = new CommentManager();
-            $tempReportUserArray = $commentManager->getReportUsers($commentId);
+            $tempReportUserArray = $this->commentManager->getReportUsers($commentId);
             if (!in_array($_SESSION['user'], $tempReportUserArray)) {
+                //on ajoute l'utilisateur qui a signalé le commentaires au tableau report_user du commentaire
                 $tempReportUserArray[] = $_SESSION['user'];
-                echo $_SESSION['user'];
                 $reportUserArray = implode(',', $tempReportUserArray);
-                print_r($reportUserArray);
-                echo $commentId;
-                $commentManager->reportComment($commentId, $reportUserArray);
+                $this->commentManager->reportComment($commentId, $reportUserArray);
             }
-            self::showPost($postId);
+            $this->showPost($postId);
         }
     }
 
-    static public function showPostAfterPostComment($postId, $author, $content)
+    public function showPostAfterPostComment($postId, $author, $content)
     {
         if (isset($_SESSION['user'])) {
-            $commentManager = new CommentManager();
-            $commentManager->postComment($postId, $author, $content);
-            self::showPost($postId);
+            $this->commentManager->postComment($postId, $author, $content);
+            $this->showPost($postId);
         }
     }
 
-    public static function showConnect()
+    public function showConnect()
     {
         require ROOT . '/views/viewConnectRegister.php';
     }
 
-    public static function showAccueil()
+    function showAccueil()
     {
-        $postManager = new PostManager();
-        $post = $postManager->getLastPost();
-
+        $post = $this->postManager->getLastPost();
         require ROOT . '/views/viewAccueil.php';
     }
 

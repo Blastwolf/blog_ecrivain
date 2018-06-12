@@ -3,36 +3,32 @@ require_once ROOT . '/models/ConnectRegisterManager.php';
 
 class ConnectRegisterController
 {
-    private $connectRegisterManager;
-    private $viewFrontendController;
 
-    function __construct()
-    {
-        $this->connectRegisterManager = new ConnectRegisterManager();
-        $this->viewFrontendController = new ViewFrontendController();
-    }
 
-    public function connectUser($userName, $password)
+    static public function connectUser($userName, $password)
     {
-        $result = $this->connectRegisterManager->getUserDetails($userName);
+
+        $connectResgisterManager = new ConnectRegisterManager();
+        $result = $connectResgisterManager->connectUser($userName, $password);
         $isPasswordCorrect = password_verify($password, $result['pass']);
-        if ($isPasswordCorrect && $this->connectRegisterManager->validUser($userName)) {
+        if ($isPasswordCorrect && $connectResgisterManager->validUser($userName)) {
             $_SESSION['user'] = $userName;
-            $this->viewFrontendController->showAccueil();
+            ViewFrontendController::showAccueil();
         } else {
             $messCon = 'Combinaison mot de passe/utilisateur incorrect';
             require ROOT . '/views/viewConnectRegister.php';
         }
+
     }
 
-    public function deconnectUser()
+    static function deconnectUser()
     {
         $_SESSION = [];
         session_destroy();
 
     }
 
-    public function addUser($userName, $password, $verif_pass)
+    static public function addUser($userName, $password, $verif_pass)
     {
         $pass_hash = password_hash($password, PASSWORD_DEFAULT);
         $verif_pass_hash = password_verify($verif_pass, $pass_hash);
@@ -42,7 +38,7 @@ class ConnectRegisterController
             /*--------On test si le pseudo est deja prit------------*/
             if (!$connectResgisterManager->validUser($userName)) {
                 $connectResgisterManager->addUser($userName, $pass_hash);
-                $this->viewFrontendController->showAccueil();
+                ViewFrontendController::showAccueil();
             } else {
                 $messReg = 'Cet nom d\'utilisateur est déjà prit';
                 require ROOT . '/views/viewConnectRegister.php';

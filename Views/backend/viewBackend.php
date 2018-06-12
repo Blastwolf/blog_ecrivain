@@ -1,6 +1,9 @@
 <?php
 $title = 'Administration : Liste des derniers posts';
 ob_start(); ?>
+<?php if (isset($_GET['action']) && $_GET['action'] == 'addPost') {
+    echo '<h3 id="posted" >Votre épisode à bien était ajouté</h3>';
+} ?>
     <div class="backendPosts">
         <h3 class="backend-Section-Title">Liste des épisodes :
             <span class="addPost"><a href="index.php?action=addPost">Ajouter un épisode</a></span></h3>
@@ -33,23 +36,23 @@ ob_start(); ?>
     </div>
     <div class="pagination"><?php
         $currentCommentPage = (isset($_GET['nbPageComment'])) ? $_GET['nbPageComment'] : 1;
-        for ($i = 1; $i <= $nbTotalPostPage; $i++) {
+        for ($i = 1; $i <= $this->nbTotalPostPage; $i++) {
             echo('<a href="index.php?action=admin&amp;nbPagePost=' . $i . '&amp;nbPageComment=' . $currentCommentPage . '">' . $i . '</a>');
         } ?>
     </div>
     <div class="backendComment">
-        <h3 class="backend-Section-Title">Liste des commentaires signalés : </h3>
+        <h3 class="backend-Section-Title" id="comments">Liste des commentaires signalés : </h3>
         <?php while ($comment = $comments->fetch()) { ?>
             <div class="comment">
                 <p class="comment-author">Par <?= $comment['author'] ?> le <?= $comment['creation_date'] ?>
                     <span class="nbReport" style="color:red"> signalé : <?= $comment['reported'] ?> fois </span>
                     <span class="linkToPost"><a href="index.php?action=post&amp;id=<?= $comment['post_id'] ?>">Lien vers l'article</a></span>
-                    <span class="button-group"><a href="index.php?action=editComment&amp;id=<?= $comment['id'] ?>&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] ?>">Modifier</a>/<a href="#">Supprimer</a></span>
+                    <span class="button-group"><a href="index.php?action=editComment&amp;id=<?= $comment['id'] ?>&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] ?>#comments">Modifier</a>/<a href="#">Supprimer</a></span>
                 </p>
 
                 <?php if (isset($moderateComment['id']) && ($moderateComment['id'] == $comment['id'])) {
                     $moderateComment['id'] ?>
-                    <form class="moderateComment" method="POST" action="index.php?action=moderateComment&amp;id=<?= $comment['id'] ?>&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] ?>">
+                    <form class="moderateComment" method="POST" action="index.php?action=moderateComment&amp;id=<?= $comment['id'] ?>&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] . '#comments' ?>">
                         <textarea name="moderatedComment"><?= $comment['content'] ?></textarea>
                         <input type="submit" value="Valider">
                     </form>
@@ -60,8 +63,8 @@ ob_start(); ?>
         <?php } ?>
         <div class="pagination"><?php
             $currentPostPage = (isset($_GET['nbPagePost'])) ? $_GET['nbPagePost'] : 1;
-            for ($e = 1; $e <= $nbTotalPostPage; $e++) {
-                echo('<a href="index.php?action=admin&amp;nbPagePost=' . $currentPostPage . '&amp;nbPageComment=' . $e . '">' . $e . '</a>');
+            for ($e = 1; $e <= $this->nbTotalCommentPage; $e++) {
+                echo('<a href="index.php?action=admin&amp;nbPagePost=' . $currentPostPage . '&amp;nbPageComment=' . $e . '#comments">' . $e . '</a>');
             } ?>
         </div>
     </div>

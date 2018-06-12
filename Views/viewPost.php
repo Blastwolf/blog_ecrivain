@@ -13,21 +13,21 @@ ob_start();
 
     </article>
 
-    <div class="comments">
+    <div class="comments" id="comments">
         <h3>Commentaires :</h3>
-        <?php foreach ($data as $key => $value) {
+        <?php foreach ($data as $value) {
             ?>
             <div class="comment">
-                <p class="comment-author">Par <?= $data[$key]['author'] ?> le <?= $data[$key]['creation_date_fr'] ?>
+                <p class="comment-author">Par <?= $value['author'] ?> le <?= $value['creation_date_fr'] ?>
                     <?php if (isset($_SESSION['user'])) {
-                        if (isset(${"messSign" . $data[$key]["id"]})) {
-                            echo '<span class="comment-sign">' . ${"messSign" . $data[$key]["id"]} . '</span>';
+                        if (isset(${"messSign" . $value["id"]})) {
+                            echo '<span class="comment-sign">' . ${"messSign" . $value["id"]} . '</span>';
                         } else {
-                            echo '<span class="signComment"><a href="index.php?action=signaler&amp;id=' . $data[$key]['id'] . '&amp;postId=' . $post['id'] . '"><b>Signaler</b></a></span>';
+                            echo '<span class="signComment"><a href="index.php?action=signaler&amp;id=' . $value['id'] . '&amp;postId=' . $post['id'] . '"><b>Signaler</b></a></span>';
                         }
                     }
                     ?></p>
-                <blockquote><?= $data[$key]['content'] ?></blockquote>
+                <blockquote><?= $value['content'] ?></blockquote>
             </div>
             <?php
         }
@@ -35,7 +35,7 @@ ob_start();
         <hr>
         <h3>Poster un commentaire :</h3>
 
-        <form class="commentForm" method="POST" action="index.php?action=postComment&amp;id=<?= $post['id'] ?>">
+        <form class="commentForm" method="POST" action="index.php?action=postComment&amp;id=<?= $post['id'] ?>#comments">
             <textarea name="commentContent" placeholder="Ecrivez votre commentaire ici"></textarea>
             <input type="submit" name="postComment" value="Poster !">
         </form>

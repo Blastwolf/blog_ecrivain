@@ -11,7 +11,7 @@ ob_start();
                     <h2><a href="index.php?action=post&amp;id=<?= $data['id'] ?>"><?= $data['title'] ?></a></h2>
                 </header>
                 <div>
-                    <?= substr($data['content'], 0, 300) ?>
+                    <?= substr($data['content'], 0, 400) ?>
                 </div>
                 <ul class="actions">
                     <li><a href="index.php?action=post&amp;id=<?= $data['id'] ?>" class="button">Lire la suite</a></li>
