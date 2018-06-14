@@ -23,7 +23,7 @@ ob_start();
                         if (isset(${"messSign" . $value["id"]})) {
                             echo '<span class="comment-sign">' . ${"messSign" . $value["id"]} . '</span>';
                         } else {
-                            echo '<span class="signComment"><a href="index.php?action=signaler&amp;id=' . $value['id'] . '&amp;postId=' . $post['id'] . '"><b>Signaler</b></a></span>';
+                            echo '<span class="signComment"><a href="index.php?action=signaler&amp;id=' . $value['id'] . '&amp;postId=' . $post['id'] . '#comments"><b>Signaler</b></a></span>';
                         }
                     }
                     ?></p>
@@ -34,12 +34,14 @@ ob_start();
         ?>
         <hr>
         <h3>Poster un commentaire :</h3>
-
-        <form class="commentForm" method="POST" action="index.php?action=postComment&amp;id=<?= $post['id'] ?>#comments">
-            <textarea name="commentContent" placeholder="Ecrivez votre commentaire ici"></textarea>
-            <input type="submit" name="postComment" value="Poster !">
-        </form>
-
+        <?php if (isset($_SESSION['user'])) { ?>
+            <form class="commentForm" method="POST" action="index.php?action=postComment&amp;id=<?= $post['id'] ?>#comments">
+                <textarea name="commentContent" placeholder="Ecrivez votre commentaire ici"></textarea>
+                <input type="submit" name="postComment" value="Poster !">
+            </form>
+        <?php } else {
+            echo '<p>' . 'Vous devez être connecté pour poster un message.' . '</p>';
+        } ?>
     </div>
 <?php
 $content = ob_get_clean();

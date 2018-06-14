@@ -38,10 +38,9 @@ class ConnectRegisterController
         $verif_pass_hash = password_verify($verif_pass, $pass_hash);
 
         if (isset($userName) && ($verif_pass_hash)) {
-            $connectResgisterManager = new ConnectRegisterManager();
             /*--------On test si le pseudo est deja prit------------*/
-            if (!$connectResgisterManager->validUser($userName)) {
-                $connectResgisterManager->addUser($userName, $pass_hash);
+            if (!$this->connectRegisterManager->validUser($userName)) {
+                $this->connectRegisterManager->addUser($userName, $pass_hash);
                 $this->viewFrontendController->showAccueil();
             } else {
                 $messReg = 'Cet nom d\'utilisateur est déjà prit';

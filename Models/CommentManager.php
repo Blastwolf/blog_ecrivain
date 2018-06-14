@@ -17,7 +17,7 @@ class CommentManager extends Manager
     {
         $postIdSafe = htmlspecialchars($postId);
         $req = $this->db->prepare('SELECT id, post_id, author, content, reported, report_users ,DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr
-			FROM comments WHERE post_id = ? ORDER BY creation_date ASC');
+			FROM comments WHERE post_id = ? AND reported < 2 ORDER BY creation_date ASC');
         $req->execute([$postIdSafe]);
 
         return $req;
@@ -59,9 +59,9 @@ class CommentManager extends Manager
 
     public function getReportedComments($startIndex)
     {
-
-        $req = $this->db->prepare('SELECT * FROM comments ORDER BY reported DESC LIMIT :start,5');
-        $req->bindParam(':start', $startIndex, PDO::PARAM_INT);
+        $startIndexSafe = intval(htmlspecialchars($startIndex));
+        $req = $this->db->prepare('SELECT * FROM comments WHERE reported >=1 ORDER BY reported DESC LIMIT :start,5');
+        $req->bindParam(':start', $startIndexSafe, PDO::PARAM_INT);
         $req->execute();
 
         return $req;
@@ -69,7 +69,7 @@ class CommentManager extends Manager
 
     public function countComment()
     {
-        $req = $this->db->query('SELECT COUNT(*) FROM comments');
+        $req = $this->db->query('SELECT COUNT(*) FROM comments WHERE reported >= 1');
         return $req->fetchColumn();
     }
 

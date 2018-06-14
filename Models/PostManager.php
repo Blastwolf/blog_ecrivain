@@ -7,8 +7,8 @@ class PostManager extends Manager
 
     public function getPosts($start)
     {
-        $req = $this->db->prepare('SELECT id,title,content, DATE_FORMAT(creation_date, \'%d/%m/%Y\')
-                            AS creation_date_fr FROM posts ORDER BY creation_date DESC LIMIT :start, 4');
+        $req = $this->db->prepare('SELECT id,title,content,image_name, DATE_FORMAT(creation_date, \'%d/%m/%Y\')
+                            AS creation_date_fr FROM posts ORDER BY creation_date ASC LIMIT :start, 4');
         $req->bindParam(':start', $start, PDO::PARAM_INT);
         $req->execute();
         return $req;
@@ -16,7 +16,7 @@ class PostManager extends Manager
 
     public function getPost($postId)
     {
-        $req = $this->db->prepare('SELECT id,title,content, DATE_FORMAT(creation_date, \'%d/%m/%Y\')
+        $req = $this->db->prepare('SELECT id,title,content,image_name, DATE_FORMAT(creation_date, \'%d/%m/%Y\')
                             AS creation_date_fr FROM posts WHERE id = ?');
         $req->execute([$postId]);
 
@@ -31,16 +31,16 @@ class PostManager extends Manager
         return $req->fetch();
     }
 
-    public function addPost($title, $content)
+    public function addPost($title, $content, $image_name)
     {
-        $req = $this->db->prepare('INSERT INTO posts (title,content)VALUES(:title,:content)');
-        $req->execute([':title' => $title, ':content' => $content]);
+        $req = $this->db->prepare('INSERT INTO posts (title,content,image_name)VALUES(:title,:content,:image_name)');
+        $req->execute([':title' => $title, ':content' => $content, ':image_name' => $image_name]);
 
     }
 
     public function updatePost($title, $content, $postId)
     {
-        $req = $this->db->prepare('UPDATE posts SET title = :title,content = :content,creation_date = CURRENT_TIMESTAMP() WHERE id = :id');
+        $req = $this->db->prepare('UPDATE posts SET title = :title,content = :content WHERE id = :id');
         $req->execute([':title' => $title, ':content' => $content, ':id' => $postId]);
         return $req;
     }

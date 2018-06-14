@@ -1,12 +1,16 @@
 <?php
 $title = 'Administration : Liste des derniers posts';
 ob_start(); ?>
-<?php if (isset($_GET['action']) && $_GET['action'] == 'addPost') {
-    echo '<h3 id="posted" >Votre épisode à bien était ajouté</h3>';
+<?php if (isset($this->message)) {
+    echo '<p id="success">' . $this->message . '</p>';
+} elseif (isset($error)) {
+    echo '<h3 id="error">' . $message . '</h3>';
+
 } ?>
     <div class="backendPosts">
         <h3 class="backend-Section-Title">Liste des épisodes :
-            <span class="addPost"><a href="index.php?action=addPost">Ajouter un épisode</a></span></h3>
+            <span class="addPost"><a href="index.php?action=addPost&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] ?>">Ajouter un épisode</a></span>
+        </h3>
         <div class="table-wrapper">
             <table>
                 <thead>
@@ -22,9 +26,11 @@ ob_start(); ?>
                     <tr>
                         <td><?= $data['creation_date_fr'] ?></td>
                         <td><?= $data['title'] ?></td>
-                        <td><a href="index.php?action=editPost&amp;id=<?= $data['id'] ?>">Modifier</a></td>
                         <td>
-                            <a href="index.php?action=deletePost&amp;id=<?= $data['id'] ?>" onClick="return confirm('Etes vous sur de vouloir supprimer ce post ?')">Supprimer</a>
+                            <a href="index.php?action=editPost&amp;id=<?= $data['id'] ?>&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] ?>">Modifier</a>
+                        </td>
+                        <td>
+                            <a href="index.php?action=deletePost&amp;id=<?= $data['id'] ?>&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] ?>" onClick="return confirm('Etes vous sur de vouloir supprimer ce post ?')">Supprimer</a>
                         </td>
                     </tr>
 
@@ -42,7 +48,11 @@ ob_start(); ?>
     </div>
     <div class="backendComment">
         <h3 class="backend-Section-Title" id="comments">Liste des commentaires signalés : </h3>
-        <?php while ($comment = $comments->fetch()) { ?>
+        <?php
+        if (isset($this->messageCom)) {
+            echo '<p id="success">' . $this->messageCom . '</p>';
+        }
+        while ($comment = $comments->fetch()) { ?>
             <div class="comment">
                 <p class="comment-author">Par <?= $comment['author'] ?> le <?= $comment['creation_date'] ?>
                     <span class="nbReport" style="color:red"> signalé : <?= $comment['reported'] ?> fois </span>

@@ -70,10 +70,18 @@ class ViewFrontendController
         require ROOT . '/views/viewConnectRegister.php';
     }
 
-    function showAccueil()
+    public function showAccueil()
     {
         $post = $this->postManager->getLastPost();
         require ROOT . '/views/viewAccueil.php';
     }
+
+    public function show404($e)
+    {
+        $error = "Il y à eu une erreur !";
+        require ROOT . '/views/view404.php';
+        var_dump($e);
+    }
+
 
 }

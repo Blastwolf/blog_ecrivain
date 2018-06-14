@@ -1,196 +1,92 @@
-html, body {
-    width: 100%;
-    height: 100%;
-}
-
-* {
-    padding: 0;
-    margin: 0;
-}
-
-body {
-}
-
-.navbar {
-    border: 2px solid black;
-    height: 70px;
-    margin-bottom: 100px;
+.connect-register-wrapper {
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
 }
 
-.navbar-menu {
-    display: flex;
-    list-style: none;
+.connect, .register {
+    width: 45%;
 }
 
-.navbar-menu a {
-    display: block;
-    margin: 10px;
-    border: 2px solid black;
-    padding: 8px;
-    text-align: center;
-    text-decoration: none;
-}
-
-.welcomeUser {
-    margin: auto 0;
-}
-
-.article {
-    width: 70%;
-    box-shadow: 0px 0px 5px black;
-    margin: auto auto 50px;
-    padding: 20px;
-}
-
-.article h3 {
-    text-align: center;
-    color: deepskyblue;
-    margin-bottom: 20px;
-    font-size: 38px;
-}
-
-.date {
-    display: block;
-    margin: 20px auto 5px;
-    font-weight: 700;
-    text-align: right;
-}
-
-.comments {
-    width: 70%;
-    box-shadow: 0px 0px 5px black;
-    margin: auto auto 50px;
-    padding: 10px;
-    background-color: blanchedalmond;
-}
-
-.comments p {
-    margin: 10px;
-}
-
-.comment {
-    width: 95%;
-    box-shadow: 0px 0px 5px black;
-    padding: 5px;
-    margin: 10px;
-    background-color: white;
-}
-
-.ifLogged {
-    float: right;
-}
-
-.comment-sign {
-    color: green;
-    float: right;
-}
-
-.commentForm textarea {
-    width: 80%;
-    height: 250px;
-    margin: auto;
-    display: block;
-}
-
-/*--------------------CONNECTION/REGISTER--------------------------*/
-.connectRegister-Wrapper {
-    display: flex;
-    justify-content: space-around;
-}
-
-.connectRegister-Wrapper h2 {
-    text-align: center;
-}
-
-.connectRegister-Wrapper .connect, .register {
-    box-shadow: 0px 0px 5px black;
-    padding: 10px;
-    margin: 15px;
-}
-
-.connectRegister-Wrapper label {
-    width: 150px;
-    text-align: right;
-    display: inline-block;
-    margin-right: 3px;
-}
-
-.connectRegister-Wrapper label, input {
-    margin-bottom: 5px;
-}
-
-/*--------------BACKEND ACCUEIL CSS-------------*/
-.backendPosts {
-    box-shadow: 0px 0px 5px black;
-    width: 70%;
-    margin: auto;
-    padding: 20px 20px 10px;
-}
-
-.backend-Section-Title {
-    font-size: 38px;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.backendPost-wrapper {
-    display: flex;
-    align-items: baseline;
-    align-content: space-evenly;
-    justify-content: center;
-}
-
-.backendPost-wrapper .article {
-
-    width: 100%;
-    position: relative;
-    z-index: 0;
-}
-
-.backendPost-option {
-    box-shadow: 3px 0px 5px black;
-    padding: 20px;
-    list-style: none;
-    position: relative;
-    left: -2px;
-    z-index: 99;
-    height: 70px;
-    background-color: bisque;
-}
-
-.backendPost-option li {
+.posts article {
     margin: 5px;
 }
 
-.backendPost-option button {
-    padding: 3px;
+.comment {
+    border: 1px solid #eeeeee;
+}
+
+.comment p, blockquote {
+
+    margin: 1rem auto auto;
+}
+
+.comment-sign {
+    float: right;
+    color: green;
+}
+
+.addPost {
+    float: right;
+    color: blue;
+}
+
+.backendComment > * {
+    margin: 1rem;
+}
+
+.si {
+    display: block;
+}
+
+.nbReport {
+    margin: 2rem;
+}
+
+.linkToPost {
+    margin: 2rem;
 }
 
 .button-group {
     float: right;
 }
 
-.button-group button {
-    margin: auto 20px auto;
+.moderateComment {
+    margin: auto;
+    width: auto;
 }
 
-.tinymce-post-wrapper {
-    width: 80%;
+.moderateComment textarea {
+    background-color: rgba(152, 251, 152, 0.5);
+}
+
+.commentForm > * {
+    margin: 1rem;
+}
+
+.signComment {
+    margin-right: 1rem;
+    float: right;
+}
+
+#success {
+    background-color: green;
+    text-align: center;
+    color: white;
+    font-weight: 900;
+    padding: 20px;
+    width: 70%;
+    border: none;
     margin: auto;
 }
 
-.backendComment {
-    box-shadow: 0px 0px 5px black;
+#error {
+    background-color: red;
+    text-align: center;
+    color: white;
+    font-weight: 900;
+    padding: 20px;
     width: 70%;
-    margin: 20px auto auto;
-    padding: 20px 20px 10px;
-
+    border: none;
+    margin: auto;
 }
-
-.comment > * {
-    margin: 0.2rem;
-}
-

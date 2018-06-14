@@ -10,6 +10,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <link rel="stylesheet" href="Public/assets/css/main.css"/>
+    <link rel="stylesheet" href="Public/css/style.css"/>
     <noscript>
         <link rel="stylesheet" href="Public/assets/css/noscript.css"/>
     </noscript>
@@ -21,7 +22,7 @@
 
     <!-- Header -->
     <header id="header">
-        <a href="index.html" class="logo"><?= $title ?></a>
+        <a href="index.php" class="logo"><?= $title ?></a>
     </header>
 
     <!-- Nav -->

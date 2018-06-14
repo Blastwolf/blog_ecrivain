@@ -1,6 +1,7 @@
 <?php
 require_once ROOT . '/models/PostManager.php';
 require_once ROOT . '/models/CommentManager.php';
+require_once ROOT . '/models/ImageManager.php';
 
 class ViewBackendController
 {
@@ -8,87 +9,75 @@ class ViewBackendController
     private $nbTotalCommentPage;
     private $postManager;
     private $commentManager;
+    private $ImageManager;
+    private $currentPageNumberPost;
+    private $currentPageNumberComment;
+    private $message;
+    private $error;
 
-    function __construct()
+
+    function __construct($currentPageNumberPost = 1, $currentPageNumberComment = 1)
     {
         $this->postManager = new PostManager();
         $this->commentManager = new CommentManager();
+        $this->ImageManager = new ImageManager();
+        $this->currentPageNumberPost = ($currentPageNumberPost - 1) * 4;
+        $this->currentPageNumberComment = ($currentPageNumberComment - 1) * 5;
 
         $this->nbTotalPostPage = ceil($this->postManager->countPost() / 4);
         $this->nbTotalCommentPage = ceil($this->commentManager->countComment() / 5);
     }
 
 
-    public function showBackend($currentPageNumberPost = 1, $currentPageNumberComment = 1)
+    public function showBackend()
     {
-        $currentPagePost = ($currentPageNumberPost - 1) * 4;
-        $currentPageComment = ($currentPageNumberComment - 1) * 5;
-        //$postManager = new PostManager();
-        //$commentManager = new CommentManager();
-        $posts = $this->postManager->getPosts($currentPagePost);
-        $comments = $this->commentManager->getReportedComments($currentPageComment);
-        //$nbComments = $commentManager->countComment();
-        //$nbPosts = $postManager->countPost();
-        //$nbTotalCommentPage = ceil($nbComments / 5);
-        //$nbTotalPostPage = ceil($nbPosts / 4);
+        $posts = $this->postManager->getPosts($this->currentPageNumberPost);
+        $comments = $this->commentManager->getReportedComments($this->currentPageNumberComment);
+
         require ROOT . '/views/backend/viewBackend.php';
-
     }
 
 
-    static public function showEditPost($postId)
+    public function showEditPost($postId)
     {
-        if (isset($_SESSION['user']) && ($_SESSION['user'] == 'admin')) {
-            $postManager = new PostManager();
-            $commentManager = new CommentManager();
-            $post = $postManager->getPost($postId);
-            $comments = $commentManager->getComments($postId);
-            require ROOT . '/views/backend/viewEditPost.php';
+        $post = $this->postManager->getPost($postId);
+        $comments = $this->commentManager->getComments($postId);
+        require ROOT . '/views/backend/viewEditPost.php';
+    }
+
+    public function showAddPost()
+    {
+        require ROOT . '/views/backend/viewAddPost.php';
+    }
+
+    public function addPost($title, $content, $image_name)
+    {
+        $isUploadSuccess = $this->ImageManager->uploadImage();
+        if ($isUploadSuccess == 'success') {
+            $this->postManager->addPost($title, $content, $image_name);
+            $this->message = 'Episode ajouté avec succé !';
+            $this->showBackend();
+
         } else {
-            echo 'Vous n\'avez pas accés à cette page <a href="index.php">Retourner à la page d\'Accueil</a>';
-        }
-    }
-
-    public static function showAddPost()
-    {
-        if (isset($_SESSION['user']) && $_SESSION['user'] == 'admin') {
+            $this->error = $isUploadSuccess;
             require ROOT . '/views/backend/viewAddPost.php';
-        } else {
-            echo 'Vous n\'avez pas les droits requis';
-        }
-    }
-
-    public static function addPost($title, $content)
-    {
-        if (isset($_SESSION['user']) && $_SESSION['user'] == 'admin') {
-            $postManager = new PostManager();
-            $postManager->addPost($title, $content);
-            self::showBackend();
-        } else {
-            echo 'Vous n\'avez pas les droits requis';
         }
     }
 
 
-    public static function updatePost($title, $content, $postId)
+    public function updatePost($title, $content, $postId)
     {
-        if (isset($_SESSION['user']) && ($_SESSION['user'] == 'admin')) {
-            $postManager = new PostManager();
-            $postManager->updatePost($title, $content, $postId);
-            self::showBackend();
-            echo 'la news a bien etait update';
-        }
+        $this->postManager->updatePost($title, $content, $postId);
+        $this->showBackend();
     }
 
-    public static function deletePost($postId)
+    public function deletePost($postId)
     {
-        if (isset($_SESSION['user']) && $_SESSION['user'] == 'admin') {
-            $postManager = new PostManager();
-            $postManager->deletePost($postId);
-            self::showBackend();
-        } else {
-            echo 'Vous n\'avez pas les droits requis';
-        }
+        $post = $this->postManager->getPost($postId);
+        $this->postManager->deletePost($postId);
+        $this->ImageManager->deleteImage($post['image_name']);
+        $this->message = 'Episode supprimé !';
+        $this->showBackend();
     }
 
     public function showEditComment($commentId, $currentPageNumberPost, $currentPageNumberComment)
@@ -104,9 +93,10 @@ class ViewBackendController
     }
 
 
-    public function moderateComment($commentId, $commentContent, $currentPageNumberPost, $currentPageNumberComment)
+    public function moderateComment($commentId, $commentContent)
     {
         $this->commentManager->updateComment($commentId, $commentContent);
-        $this->showBackend($currentPageNumberPost, $currentPageNumberComment);
+        $this->messageCom = 'Le commentaire à bien était modéré ';
+        $this->showBackend();
     }
 }

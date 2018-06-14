@@ -7,7 +7,19 @@ require ROOT . '/controllers/ViewBackendController.php';
 $connectRegisterController = new ConnectRegisterController();
 $viewFrontendController = new ViewFrontendController();
 
+//function exception_error_handler($severity, $message, $file, $line)
+//{
+//    if (!(error_reporting() & $severity)) {
+//        // Ce code d'erreur n'est pas inclu dans error_reporting
+//        return;
+//    }
+//    throw new ErrorException($message, 0, $severity, $file, $line);
+//}
+//
+//set_error_handler("exception_error_handler");
 
+
+////try {
 if (isset($_GET['action'])) {
     if ($_GET['action'] == 'posts') {
         $viewFrontendController->showPosts($_GET['nbPage']);
@@ -33,26 +45,28 @@ if (isset($_GET['action'])) {
 //-------------------------PARTIE BACKEND-------------------------------//
         //on verifie que l'administrateur du serveur soit bien connecté
     } elseif (isset($_SESSION['user']) && $_SESSION['user'] == 'admin') {
-        $viewBackendController = new ViewBackendController();
+        //on instancie le controlleur backend
+        $viewBackendController = new ViewBackendController($_GET['nbPagePost'], $_GET['nbPageComment']);
+
         if ($_GET['action'] == 'admin') {
-            $viewBackendController->showBackend($_GET['nbPagePost'], $_GET['nbPageComment']);
+            $viewBackendController->showBackend();
         } elseif ($_GET['action'] == 'addPost') {
             if (isset($_POST['addPost'])) {
-                ViewBackendController::addPost($_POST['addPostTitle'], $_POST['addPostContent']);
+                $viewBackendController->addPost($_POST['addPostTitle'], $_POST['addPostContent'], $_FILES['fichier']['name']);
             } else {
-                ViewBackendController::showAddPost();
+                $viewBackendController->showAddPost();
             }
 
         } elseif ($_GET['action'] == 'editPost') {
-            ViewBackendController::showEditPost($_GET['id']);
+            $viewBackendController->showEditPost($_GET['id']);
         } elseif ($_GET['action'] == 'updatePost') {
-            ViewBackendController::updatePost($_POST['editPostTitle'], $_POST['editPostContent'], $_GET['id']);
+            $viewBackendController->updatePost($_POST['editPostTitle'], $_POST['editPostContent'], $_GET['id']);
         } elseif ($_GET['action'] == 'deletePost') {
-            ViewBackendController::deletePost($_GET['id']);
+            $viewBackendController->deletePost($_GET['id']);
         } elseif ($_GET['action'] == 'editComment') {
             $viewBackendController->showEditComment($_GET['id'], $_GET['nbPagePost'], $_GET['nbPageComment']);
         } elseif ($_GET['action'] == 'moderateComment') {
-            $viewBackendController->moderateComment($_GET['id'], $_POST['moderatedComment'], $_GET['nbPagePost'], $_GET['nbPageComment']);
+            $viewBackendController->moderateComment($_GET['id'], $_POST['moderatedComment']);
         }
     } else {
         echo 'Vous souhaitez acceder à une zone résèrvé à l\'administrateur';
@@ -61,4 +75,7 @@ if (isset($_GET['action'])) {
 } else {
     $viewFrontendController->showAccueil();
 }
+//} catch (Exception $e) {
+//    $viewFrontendController->show404($e);
+//}
 
