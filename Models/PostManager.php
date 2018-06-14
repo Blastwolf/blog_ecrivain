@@ -38,10 +38,10 @@ class PostManager extends Manager
 
     }
 
-    public function updatePost($title, $content, $postId)
+    public function updatePost($title, $content, $image_name, $postId)
     {
-        $req = $this->db->prepare('UPDATE posts SET title = :title,content = :content WHERE id = :id');
-        $req->execute([':title' => $title, ':content' => $content, ':id' => $postId]);
+        $req = $this->db->prepare('UPDATE posts SET title = :title,content = :content ,image_name = :image_name WHERE id = :id');
+        $req->execute([':title' => $title, ':content' => $content, ':image_name' => $image_name, ':id' => $postId]);
         return $req;
     }
 

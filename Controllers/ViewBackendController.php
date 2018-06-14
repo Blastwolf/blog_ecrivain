@@ -65,10 +65,24 @@ class ViewBackendController
     }
 
 
-    public function updatePost($title, $content, $postId)
+    public function updatePost($title, $content, $image_name, $postId)
     {
-        $this->postManager->updatePost($title, $content, $postId);
-        $this->showBackend();
+        //on recupere le post pour pouvoir supprimer l'image déjà en place si il y en a une
+        $post = $this->postManager->getPost($postId);
+        $isUploadSuccess = $this->ImageManager->uploadImage();
+        if ($isUploadSuccess == 'success') {
+            $this->ImageManager->deleteImage($post['image_name']);
+            //on upload la nouvelle image et les modif du post
+            $imageTemp = $this->ImageManager->changeNameImage($image_name);
+            $this->postManager->updatePost($title, $content, $imageTemp, $postId);
+            $this->message = 'Episode modifié avec succé !';
+            $this->showBackend();
+
+        } else {
+            $this->error = $isUploadSuccess;
+            require ROOT . '/views/backend/viewEditPost.php';
+        }
+
     }
 
     public function deletePost($postId)

@@ -2,14 +2,21 @@
 $title = 'Edition de billet';
 ob_start(); ?>
     <div class="edit-post-wrapper">
-        <form method="POST" action="index.php?action=updatePost&amp;id=<?= $post['id']; ?>&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] ?>">
+        <?php if (isset($this->error)) {
+            echo '<p id="error">' . $this->error . '</p>';
+        } ?>
+        <form method="POST" action="index.php?action=updatePost&amp;id=<?= $post['id']; ?>&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] ?>" enctype="multipart/form-data">
             <label for="editPostTitle">Titre de l'article
                 :</label><input type="text" name="editPostTitle" class="mytextarea" required
                                 value="<?php if (isset($post)) {
                                     echo htmlspecialchars($post["title"]);
                                 } ?>">
+            <label for="fichier_a_uploader" title="Recherchez le fichier à uploader !">Choisissez un image miniature
+                pour l'épisode :</label>
+            <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo ImageManager::MAX_SIZE; ?>"/>
+            <input name="fichier" type="file" id="fichier_a_uploader" required/>
             <textarea name="editPostContent" id="mytextarea" required><?php if (isset($post)) {
-                    echo nl2br(htmlspecialchars($post["content"]));
+                    echo $post["content"];
                 } ?></textarea>
             <input type="submit" name="updatePost" id="updateButton">
         </form>

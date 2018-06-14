@@ -60,7 +60,7 @@ if (isset($_GET['action'])) {
         } elseif ($_GET['action'] == 'editPost') {
             $viewBackendController->showEditPost($_GET['id']);
         } elseif ($_GET['action'] == 'updatePost') {
-            $viewBackendController->updatePost($_POST['editPostTitle'], $_POST['editPostContent'], $_GET['id']);
+            $viewBackendController->updatePost($_POST['editPostTitle'], $_POST['editPostContent'], $_FILES['fichier']['name'], $_GET['id']);
         } elseif ($_GET['action'] == 'deletePost') {
             $viewBackendController->deletePost($_GET['id']);
         } elseif ($_GET['action'] == 'editComment') {
@@ -76,6 +76,6 @@ if (isset($_GET['action'])) {
     $viewFrontendController->showAccueil();
 }
 //} catch (Exception $e) {
-//    $viewFrontendController->show404($e);
+//    $viewFrontendController->show500($e);
 //}
 
