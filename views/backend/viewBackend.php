@@ -57,14 +57,16 @@ ob_start(); ?>
                 <p class="comment-author">Par <?= $comment['author'] ?> le <?= $comment['creation_date'] ?>
                     <span class="nbReport" style="color:red"> signalé : <?= $comment['reported'] ?> fois </span>
                     <span class="linkToPost"><a href="index.php?action=post&amp;id=<?= $comment['post_id'] ?>">Lien vers l'article</a></span>
-                    <span class="button-group"><a href="index.php?action=editComment&amp;id=<?= $comment['id'] ?>&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] ?>#comments">Modifier</a>/<a href="#">Supprimer</a></span>
+                    <span class="button-group"><a href="index.php?action=editComment&amp;id=<?= $comment['id'] ?>&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] ?>#comments">Modifier</a>/
+                        <a href="index.php?action=deleteComment&amp;id=<?= $comment['id'] ?>&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] ?>#comments"
+                           onClick="return confirm('Etes vous sur de vouloir supprimer ce commentaire ?')">Supprimer</a></span>
                 </p>
 
                 <?php if (isset($moderateComment['id']) && ($moderateComment['id'] == $comment['id'])) {
                     $moderateComment['id'] ?>
-                    <form class="moderateComment" method="POST" action="index.php?action=moderateComment&amp;id=<?= $comment['id'] ?>&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] . '#comments' ?>">
+                    <form class="moderateComment" method="POST" action="index.php?action=editComment&amp;id=<?= $comment['id'] ?>&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] . '#comments' ?>">
                         <textarea name="moderatedComment"><?= $comment['content'] ?></textarea>
-                        <input type="submit" value="Valider">
+                        <input type="submit" value="Valider" name="moderate">
                     </form>
                 <?php } else { ?>
                     <blockquote><?= $comment['content'] ?></blockquote>

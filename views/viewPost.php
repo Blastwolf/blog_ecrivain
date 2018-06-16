@@ -14,6 +14,9 @@ ob_start();
     </article>
 
     <div class="comments" id="comments">
+        <?php if (isset($this->message)) {
+            echo '<p id="success">' . $this->message . '</p>';
+        } ?>
         <h3>Commentaires :</h3>
         <?php foreach ($data as $value) {
             ?>
@@ -33,10 +36,11 @@ ob_start();
         }
         ?>
         <hr>
+
         <h3>Poster un commentaire :</h3>
         <?php if (isset($_SESSION['user'])) { ?>
-            <form class="commentForm" method="POST" action="index.php?action=postComment&amp;id=<?= $post['id'] ?>#comments">
-                <textarea name="commentContent" placeholder="Ecrivez votre commentaire ici"></textarea>
+            <form class="commentForm" method="POST" action="index.php?action=post&amp;id=<?= $post['id'] ?>#comments">
+                <textarea name="commentContent" placeholder="Ecrivez votre commentaire ici" required></textarea>
                 <input type="submit" name="postComment" value="Poster !">
             </form>
         <?php } else {

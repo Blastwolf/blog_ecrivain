@@ -50,6 +50,7 @@ class ConnectRegisterController
             $messReg = 'Mot de passe différents';
             require ROOT . '/views/viewConnectRegister.php';
         }
+
     }
 
 }

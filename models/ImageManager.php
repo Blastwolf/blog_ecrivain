@@ -14,6 +14,7 @@ class ImageManager extends Manager
     private $tabExt = array('jpg', 'gif', 'png', 'jpeg');    // Extensions autorisees
     private $infosImg;
     private $postManager;
+    private $nomImage;
 
     function __construct()
     {
@@ -42,10 +43,10 @@ class ImageManager extends Manager
                     // Parcours du tableau d'erreurs
                     if (isset($_FILES['fichier']['error']) && UPLOAD_ERR_OK === $_FILES['fichier']['error']) {
                         // On renomme le fichier
-                        $nomImage = $this->changeNameImage($_FILES['fichier']['name']);
+                        $this->nomImage = $this->changeNameImage($_FILES['fichier']['name']);
 
                         // Si c'est OK, on teste l'upload
-                        if (move_uploaded_file($_FILES['fichier']['tmp_name'], self::TARGET . $nomImage)) {
+                        if (move_uploaded_file($_FILES['fichier']['tmp_name'], self::TARGET . $this->nomImage)) {
                             return 'success';
                         } else {
                             // Sinon on affiche une erreur systeme
@@ -80,8 +81,15 @@ class ImageManager extends Manager
     public function changeNameImage($file)
     {
         $addTime = explode('.', $file);
-        array_splice($addTime, -1, 0, array(time()));
-        return implode('.', $addTime);
+        array_splice($addTime, -1, 1, array(time()));
+        //on ajoute le timstanmp a la suite du nom et on rajoute l'extension
+        return implode('', $addTime) . '.' . pathinfo($file, PATHINFO_EXTENSION);
+
+    }
+
+    public function getImageName()
+    {
+        return $this->nomImage;
     }
 
 }

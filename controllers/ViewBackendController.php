@@ -31,7 +31,7 @@ class ViewBackendController
 
     public function showBackend()
     {
-        $posts = $this->postManager->getPosts($this->currentPageNumberPost);
+        $posts = $this->postManager->getPosts($this->currentPageNumberPost, 'DESC');
         $comments = $this->commentManager->getReportedComments($this->currentPageNumberComment);
 
         require ROOT . '/views/backend/viewBackend.php';
@@ -54,7 +54,8 @@ class ViewBackendController
     {
         $isUploadSuccess = $this->ImageManager->uploadImage();
         if ($isUploadSuccess == 'success') {
-            $this->postManager->addPost($title, $content, $image_name);
+            $imageChangedName = $this->ImageManager->getImageName();
+            $this->postManager->addPost($title, $content, $imageChangedName);
             $this->message = 'Episode ajouté avec succé !';
             $this->showBackend();
 
@@ -70,11 +71,17 @@ class ViewBackendController
         //on recupere le post pour pouvoir supprimer l'image déjà en place si il y en a une
         $post = $this->postManager->getPost($postId);
         $isUploadSuccess = $this->ImageManager->uploadImage();
-        if ($isUploadSuccess == 'success') {
+        //si on ajoute pas d'image dans la page d'édition , on laisse l'image déjà en place et on update le post
+        if ($image_name == null) {
+            $this->postManager->updatePost($title, $content, $post['image_name'], $postId);
+            $this->message = 'Episode modifié avec succé !';
+            $this->showBackend();
+            //sinon on upgrade l'image avec la nouvelle et on update le post
+        } elseif ($isUploadSuccess == 'success') {
             $this->ImageManager->deleteImage($post['image_name']);
             //on upload la nouvelle image et les modif du post
-            $imageTemp = $this->ImageManager->changeNameImage($image_name);
-            $this->postManager->updatePost($title, $content, $imageTemp, $postId);
+            $imageChangedName = $this->ImageManager->getImageName();
+            $this->postManager->updatePost($title, $content, $imageChangedName, $postId);
             $this->message = 'Episode modifié avec succé !';
             $this->showBackend();
 
@@ -111,6 +118,13 @@ class ViewBackendController
     {
         $this->commentManager->updateComment($commentId, $commentContent);
         $this->messageCom = 'Le commentaire à bien était modéré ';
+        $this->showBackend();
+    }
+
+    public function deleteComment($commentId)
+    {
+        $this->commentManager->deleteComment($commentId);
+        $this->messageCom = 'Le commentaire à bien était supprimé';
         $this->showBackend();
     }
 }

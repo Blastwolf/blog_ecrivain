@@ -9,10 +9,10 @@
     <title><?= $title ?></title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
-    <link rel="stylesheet" href="Public/assets/css/main.css"/>
-    <link rel="stylesheet" href="Public/css/style.css"/>
+    <link rel="stylesheet" href="public/assets/css/main.css"/>
+    <link rel="stylesheet" href="public/css/style.css"/>
     <noscript>
-        <link rel="stylesheet" href="Public/assets/css/noscript.css"/>
+        <link rel="stylesheet" href="public/assets/css/noscript.css"/>
     </noscript>
 </head>
 <body class="is-loading">
@@ -28,12 +28,23 @@
     <!-- Nav -->
     <nav id="nav">
         <ul class="links">
-            <?php if (isset($_SESSION['user']) && ($_SESSION['user'] == 'admin')) {
-                echo '<li><a href="index.php?action=admin&amp;nbPagePost=1&amp;nbPageComment=1">Administration</a></li>';
+            <?php
+            if (isset($_SESSION['user']) && ($_SESSION['user'] == 'admin')) {
+                //on test si $get = admin si oui on met la class active
+                if ($_GET['action'] == 'admin' OR $_GET['action'] == 'editPost' OR $_GET['action'] == 'addPost' OR $_GET['action'] == 'deletePost') {
+                    $active = 'active';
+                } else {
+                    $active = '';
+                }
+                echo '<li class="' . $active . '"><a href="index.php?action=admin&amp;nbPagePost=1&amp;nbPageComment=1">Administration</a></li>';
             } ?>
-            <li class="active"><a href="index.php">Accueil</a></li>
-            <li><a href="index.php?action=posts&amp;nbPage=1">Episodes</a></li>
-            <li><?php if (isset($_SESSION['user'])) {
+            <li class=""><a href="index.php">Accueil</a></li>
+            <li class="<?php if ($_GET['action'] == 'posts' OR $_GET['action'] == 'post' OR $_GET['action'] == 'signaler') {
+                echo 'active';
+            } ?>"><a href="index.php?action=posts&amp;nbPage=1">Episodes</a></li>
+            <li class="<?php if ($_GET['action'] == 'connect') {
+                echo 'active';
+            } ?>"><?php if (isset($_SESSION['user'])) {
                     echo '<a href="index.php?action=deconnect">Déconnexion</a>';
                 } else {
                     echo '<a href="index.php?action=connect">Connexion</a>';
@@ -82,7 +93,7 @@
             <section class="alt">
                 <h3>Addresse</h3>
                 <p>49, rue de l'Aigle<br/>
-                    59110 LA MADELEINE</p>
+                   59110 LA MADELEINE</p>
             </section>
             <section>
                 <h3>Téléphone</h3>
@@ -114,15 +125,15 @@
 </div>
 
 <!-- Scripts -->
-<script src="Public/assets/js/jquery.min.js"></script>
-<script src="Public/assets/js/jquery.scrollex.min.js"></script>
-<script src="Public/assets/js/jquery.scrolly.min.js"></script>
-<script src="Public/assets/js/skel.min.js"></script>
-<script src="Public/assets/js/util.js"></script>
-<script src="Public/assets/js/main.js"></script>
+<script src="public/assets/js/jquery.min.js"></script>
+<script src="public/assets/js/jquery.scrollex.min.js"></script>
+<script src="public/assets/js/jquery.scrolly.min.js"></script>
+<script src="public/assets/js/skel.min.js"></script>
+<script src="public/assets/js/util.js"></script>
+<script src="public/assets/js/main.js"></script>
 <script src="public/plugins/tinymce/tinymce.min.js"></script>
 <script src="public/js/init_tinymce.js" type="text/javascript"></script>
-<script src="Public/js/active.js"></script>
+<script src="public/js/active.js"></script>
 
 </body>
 </html>

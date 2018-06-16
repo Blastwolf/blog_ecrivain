@@ -5,10 +5,15 @@ class PostManager extends Manager
 {
 
 
-    public function getPosts($start)
+    public function getPosts($start, $order = null)
     {
-        $req = $this->db->prepare('SELECT id,title,content,image_name, DATE_FORMAT(creation_date, \'%d/%m/%Y\')
+        if ($order == null) {
+            $req = $this->db->prepare('SELECT id,title,content,image_name, DATE_FORMAT(creation_date, \'%d/%m/%Y\')
                             AS creation_date_fr FROM posts ORDER BY creation_date ASC LIMIT :start, 4');
+        } else {
+            $req = $this->db->prepare('SELECT id,title,content,image_name, DATE_FORMAT(creation_date, \'%d/%m/%Y\')
+                            AS creation_date_fr FROM posts ORDER BY creation_date DESC LIMIT :start, 4');
+        }
         $req->bindParam(':start', $start, PDO::PARAM_INT);
         $req->execute();
         return $req;

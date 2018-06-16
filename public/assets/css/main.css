@@ -2542,6 +2542,7 @@ label {
 }
 
 input[type="text"],
+input[type="file"],
 input[type="password"],
 input[type="email"],
 select,
@@ -2558,6 +2559,11 @@ textarea {
     padding: 0 1rem;
     text-decoration: none;
     width: 100%;
+}
+
+input[type='file'] {
+    padding: 10px;
+    margin-bottom: 20px;
 }
 
 input[type="text"]:invalid,
@@ -2601,6 +2607,7 @@ textarea:invalid {
 }
 
 input[type="text"],
+input[type="file"],
 input[type="password"],
 input[type="email"],
 select {
@@ -2698,6 +2705,7 @@ label {
 }
 
 input[type="text"],
+input[type="file"],
 input[type="password"],
 input[type="email"],
 select,

@@ -6,6 +6,7 @@ class ViewFrontendController
 {
     private $postManager;
     private $commentManager;
+    private $message;
 
 
     function __construct()
@@ -61,6 +62,7 @@ class ViewFrontendController
     {
         if (isset($_SESSION['user'])) {
             $this->commentManager->postComment($postId, $author, $content);
+            $this->message = 'Votre commentaire à bien était ajouté !';
             $this->showPost($postId);
         }
     }
