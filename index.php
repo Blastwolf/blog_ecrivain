@@ -35,8 +35,9 @@ try {
                 $connectRegisterController->addUser($_POST['user-name-register'], $_POST['user-pass-register'], $_POST['user-pass-register-verif']);
             } elseif (isset($_POST['connect'])) {
                 $connectRegisterController->connectUser($_POST['user-name'], $_POST['user-pass']);
+            } else {
+                $viewFrontendController->showConnect();
             }
-            $viewFrontendController->showConnect();
         } elseif ($_GET['action'] == 'deconnect') {
             $connectRegisterController->deconnectUser();
             $viewFrontendController->showAccueil();
@@ -60,18 +61,18 @@ try {
             } elseif ($_GET['action'] == 'editPost') {
                 if (isset($_POST['updatePost'])) {
                     $viewBackendController->updatePost($_POST['editPostTitle'], $_POST['editPostContent'], $_FILES['fichier']['name'], $_GET['id']);
+                } else {
+                    $viewBackendController->showEditPost($_GET['id']);
                 }
-                $viewBackendController->showEditPost($_GET['id']);
 
             } elseif ($_GET['action'] == 'deletePost') {
                 $viewBackendController->deletePost($_GET['id']);
             } elseif ($_GET['action'] == 'editComment') {
                 if (isset($_POST['moderate'])) {
                     $viewBackendController->moderateComment($_GET['id'], $_POST['moderatedComment']);
+                } else {
+                    $viewBackendController->showEditComment($_GET['id'], $_GET['nbPagePost'], $_GET['nbPageComment']);
                 }
-                $viewBackendController->showEditComment($_GET['id'], $_GET['nbPagePost'], $_GET['nbPageComment']);
-                // } elseif ($_GET['action'] == 'moderateComment') {
-                //     $viewBackendController->moderateComment($_GET['id'], $_POST['moderatedComment']);
             } elseif ($_GET['action'] == 'deleteComment') {
                 $viewBackendController->deleteComment($_GET['id']);
             }

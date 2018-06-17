@@ -21,12 +21,15 @@ ob_start();
             <?php
         }
         ?>
-        <div class="pagination"><?php
-            for ($i = 1; $i <= $nbTotalPages; $i++) {
-                echo('<a class ="page" href="index.php?action=posts&amp;nbPage=' . $i . '">' . $i . '</a>');
-            } ?>
-        </div>
     </section>
+    <!--System de pagination---------------------------------------------------------------------------->
+    <div class="pagination"><?php
+        for ($i = 1; $i <= $nbTotalPages; $i++) {
+            $activePage = ($_GET['nbPage'] == $i) ? 'active' : '';
+            echo('<a class ="' . $activePage . '" href="index.php?action=posts&amp;nbPage=' . $i . '">' . $i . '</a>');
+        } ?>
+    </div>
+    <!----------------------------------------------------------------------------------------------------->
 
 
 <?php

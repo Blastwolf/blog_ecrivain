@@ -1,5 +1,5 @@
 <?php
-$title = 'Liste des derniers posts';
+$title = $post['title'];
 ob_start();
 ?>
     <article class="post featured">

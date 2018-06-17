@@ -72,7 +72,6 @@ class ImageManager extends Manager
 
     public function deleteImage($image_name)
     {
-        echo self::TARGET;
         if (file_exists(self::TARGET . $image_name)) {
             unlink(self::TARGET . $image_name);
         }

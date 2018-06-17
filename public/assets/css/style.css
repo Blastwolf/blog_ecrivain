@@ -1,0 +1,174 @@
+/*-----------------Accueil---------------*/
+.box {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.presentation {
+    width: 65%;
+    display: block;
+}
+
+.presentation-image {
+    float: right;
+    display: block;
+    width: 30%;
+    height: 30%;
+}
+
+@media screen and (max-width: 480px) {
+    .presentation {
+        width: 100%;
+    }
+
+    .presentation-image {
+        margin: 1rem;
+        width: 100%;
+    }
+}
+
+/*-------------------------------------*/
+/*-------------CSS Connection -------------------------------------*/
+.connect-register-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+
+.connect, .register {
+    width: 45%;
+    min-width: 250px;
+}
+
+.error-connecte-register {
+    color: red;
+    margin: 1rem 0 0 0;
+}
+
+@media screen and (max-width: 720px) {
+    .connect, .register {
+        width: 100%;
+    }
+}
+
+/*---------------------------------------------------------*/
+/*-------------------------Article-----------------*/
+.posts article {
+    margin: 5px;
+}
+
+.comment {
+    border: 1px solid #eeeeee;
+}
+
+.comment p, blockquote {
+
+    margin: 1rem auto auto;
+}
+
+.comment-sign {
+    float: right;
+    color: green;
+}
+
+/*---------------------------------------------------------------*/
+/*------------------------------Administration-----------------*/
+.addPost {
+    float: right;
+    color: blue;
+}
+
+.backendComment > * {
+    margin: 1rem;
+}
+
+.nbReport {
+    margin: 2rem;
+}
+
+.linkToPost {
+    margin: 2rem;
+}
+
+.button-group {
+    float: right;
+}
+
+.moderateComment {
+    margin: auto;
+    width: auto;
+}
+
+.moderateComment textarea {
+    background-color: rgba(152, 251, 152, 0.5);
+}
+
+.commentForm > * {
+    margin: 1rem;
+}
+
+.signComment {
+    margin-right: 1rem;
+    float: right;
+}
+
+@media screen and (max-width: 480px) {
+    .comment-author {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .comment-author span {
+        margin: 0;
+        float: none;
+        display: block;
+    }
+
+    .addPost {
+        float: none;
+    }
+
+}
+
+/*----------------------------------------------------------------*/
+#success {
+    background-color: green;
+    border: none;
+    text-align: center;
+    color: white;
+    font-weight: 900;
+    padding: 20px;
+    width: 70%;
+    border: none;
+    margin: auto;
+}
+
+#error {
+    background-color: red;
+    text-align: center;
+    color: white;
+    font-weight: 900;
+    padding: 20px;
+    width: 70%;
+    border: none;
+    margin: auto;
+}
+
+/*-----------------View500-------------------*/
+.view500-wrapper {
+    height: 100%;
+    width: 100%;
+}
+
+.view500 {
+    background-color: #e6e6e6;
+    margin-top: 5%;
+    margin-bottom: 40%;
+    padding: 20px;
+    display: block;
+    text-align: center;
+}

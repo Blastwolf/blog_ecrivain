@@ -17,6 +17,7 @@ ob_start(); ?>
                 <tr>
                     <th>Date</th>
                     <th>Titre</th>
+                    <th>Voir</th>
                     <th>Modifier</th>
                     <th>Supprimer</th>
                 </tr>
@@ -26,6 +27,9 @@ ob_start(); ?>
                     <tr>
                         <td><?= $data['creation_date_fr'] ?></td>
                         <td><?= $data['title'] ?></td>
+                        <td>
+                            <a href="index.php?action=post&amp;id=<?= $data['id'] ?>&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] ?>">Voir</a>
+                        </td>
                         <td>
                             <a href="index.php?action=editPost&amp;id=<?= $data['id'] ?>&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] ?>">Modifier</a>
                         </td>
@@ -40,11 +44,14 @@ ob_start(); ?>
             </table>
         </div>
     </div>
+    <!-- System de pagination -------------------------------------------------------------->
     <div class="pagination"><?php
         $currentCommentPage = (isset($_GET['nbPageComment'])) ? $_GET['nbPageComment'] : 1;
         for ($i = 1; $i <= $this->nbTotalPostPage; $i++) {
-            echo('<a href="index.php?action=admin&amp;nbPagePost=' . $i . '&amp;nbPageComment=' . $currentCommentPage . '">' . $i . '</a>');
+            $currentActivePostPage = ($_GET['nbPagePost'] == $i) ? 'active' : '';
+            echo('<a class="' . $currentActivePostPage . '" href="index.php?action=admin&amp;nbPagePost=' . $i . '&amp;nbPageComment=' . $currentCommentPage . '">' . $i . '</a>');
         } ?>
+        <!--------------------------------------------------------------------------------------->
     </div>
     <div class="backendComment">
         <h3 class="backend-Section-Title" id="comments">Liste des commentaires signalés : </h3>
@@ -73,12 +80,16 @@ ob_start(); ?>
                 <?php } ?>
             </div>
         <?php } ?>
+        <!-- System de pagination---------------------------------------------------------------------->
         <div class="pagination"><?php
             $currentPostPage = (isset($_GET['nbPagePost'])) ? $_GET['nbPagePost'] : 1;
+
             for ($e = 1; $e <= $this->nbTotalCommentPage; $e++) {
-                echo('<a href="index.php?action=admin&amp;nbPagePost=' . $currentPostPage . '&amp;nbPageComment=' . $e . '#comments">' . $e . '</a>');
+                $currentActiveCommentPage = ($_GET['nbPageComment'] == $e) ? 'active' : '';
+                echo('<a class="' . $currentActiveCommentPage . '" href="index.php?action=admin&amp;nbPagePost=' . $currentPostPage . '&amp;nbPageComment=' . $e . '#comments">' . $e . '</a>');
             } ?>
         </div>
+        <!---------------------------------------------------------------------------------------------->
     </div>
 <?php
 $content = ob_get_clean();

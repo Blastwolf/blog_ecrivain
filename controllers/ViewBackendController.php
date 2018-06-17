@@ -97,6 +97,7 @@ class ViewBackendController
         $post = $this->postManager->getPost($postId);
         $this->postManager->deletePost($postId);
         $this->ImageManager->deleteImage($post['image_name']);
+        $this->commentManager->deleteCommentsFormPost($postId);
         $this->message = 'Episode supprimé !';
         $this->showBackend();
     }

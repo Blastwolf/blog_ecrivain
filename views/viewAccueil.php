@@ -6,7 +6,7 @@
 -->
 <html>
 <head>
-    <title><?= $title ?></title>
+    <title>Jean Forteroche</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <link rel="stylesheet" href="public/assets/css/main.css"/>
@@ -18,33 +18,33 @@
 <body class="is-loading">
 
 <!-- Wrapper -->
-<div id="wrapper">
+<div id="wrapper" class="fade-in">
+
+    <!-- Intro -->
+    <div id="intro">
+        <h1>Billet simple pour<br/>
+            l'alaska</h1>
+        <p>Un roman palpitant post fluminis porrigitur successorio ab Saracenis post<br/> rex plagam ripis porrigitur in
+           usque longum longum.</p>
+        <ul class="actions">
+            <li><a href="#header" class="button icon solo fa-arrow-down scrolly">Continue</a></li>
+        </ul>
+    </div>
 
     <!-- Header -->
     <header id="header">
-        <a href="index.php" class="logo"><?= $title ?></a>
+        <a href="index.php" class="logo">Billet simple pour l'alaska</a>
     </header>
 
     <!-- Nav -->
     <nav id="nav">
         <ul class="links">
-            <?php
-            if (isset($_SESSION['user']) && ($_SESSION['user'] == 'admin')) {
-                //on test si $get = admin si oui on met la class active
-                if ($_GET['action'] == 'admin' OR $_GET['action'] == 'editPost' OR $_GET['action'] == 'addPost' OR $_GET['action'] == 'deletePost') {
-                    $active = 'active';
-                } else {
-                    $active = '';
-                }
-                echo '<li class="' . $active . '"><a href="index.php?action=admin&amp;nbPagePost=1&amp;nbPageComment=1">Administration</a></li>';
+            <?php if (isset($_SESSION['user']) && ($_SESSION['user'] == 'admin')) {
+                echo '<li class=""><a href="index.php?action=admin&amp;nbPagePost=1&amp;nbPageComment=1">Administration</a></li>';
             } ?>
-            <li class=""><a href="index.php">Accueil</a></li>
-            <li class="<?php if ($_GET['action'] == 'posts' OR $_GET['action'] == 'post' OR $_GET['action'] == 'signaler') {
-                echo 'active';
-            } ?>"><a href="index.php?action=posts&amp;nbPage=1">Episodes</a></li>
-            <li class="<?php if ($_GET['action'] == 'connect') {
-                echo 'active';
-            } ?>"><?php if (isset($_SESSION['user'])) {
+            <li class="active"><a href="index.php">Accueil</a></li>
+            <li class=""><a href="index.php?action=posts&amp;nbPage=1">Episodes</a></li>
+            <li class=""><?php if (isset($_SESSION['user'])) {
                     echo '<a href="index.php?action=deconnect">Déconnexion</a>';
                 } else {
                     echo '<a href="index.php?action=connect">Connexion</a>';
@@ -63,11 +63,34 @@
 
     <!-- Main -->
     <div id="main">
-
-        <?= $content ?>
-
+        <header class="major">
+            <h2>Presentation</h2>
+        </header>
+        <div class="box">
+            <img class="presentation-image" src="public/images/presentation.jpg" alt="une personne qui lit un livre">
+            <p class="presentation"> Bonjour et bienvenue sur mon
+                                     site , je m'appel <strong>Jean Forteroche</strong> et je suis acteur et romancier.
+                                     Je suis en train d'écrire mon dernier roman <strong>Billet Simple pour l'Alaska</strong> et je souhaite
+                                     le
+                                     publier par épisode sur ce site.<br/>Vous trouverez si dessous le derniere épisode en date , sinon vous
+                                     pourrez consulter tous les épisodes en vous rendant sur la page <a href="#">Episodes</a> de
+                                     ce site .</p>
+        </div>
+        <!-- Featured Post -->
+        <article class="post featured">
+            <header class="major">
+                <span class="date"><?= $post['creation_date_fr'] ?></span>
+                <h2><a href="#"><?= $post['title'] ?></a></h2>
+                <span class="image fit"><img src="public/images/thumbnails/<?= $post['image_name'] ?>" alt=""></span>
+            </header>
+            <div>
+                <?= substr($post['content'], 0, 600) ?>
+            </div>
+            <ul class="actions">
+                <li><a href="index.php?action=post&amp;id=<?= $post['id'] ?>" class="button">Episode complet</a></li>
+            </ul>
+        </article>
     </div>
-
     <!-- Footer -->
     <footer id="footer">
         <section>
@@ -114,16 +137,15 @@
             </section>
         </section>
     </footer>
+
     <!-- Copyright -->
     <div id="copyright">
         <ul>
-            <li>&copy; Untitled</li>
-            <li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+            <li>Par Benjamin JANEL</li>
+            <li>Dans le cadre de la formation Développeur Web Junior </a></li>
         </ul>
     </div>
-
 </div>
-
 <!-- Scripts -->
 <script src="public/assets/js/jquery.min.js"></script>
 <script src="public/assets/js/jquery.scrollex.min.js"></script>
@@ -134,6 +156,7 @@
 <script src="public/plugins/tinymce/tinymce.min.js"></script>
 <script src="public/js/init_tinymce.js" type="text/javascript"></script>
 <script src="public/js/active.js"></script>
+
 
 </body>
 </html>

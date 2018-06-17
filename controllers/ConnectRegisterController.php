@@ -6,6 +6,7 @@ class ConnectRegisterController
     private $connectRegisterManager;
     private $viewFrontendController;
 
+
     function __construct()
     {
         $this->connectRegisterManager = new ConnectRegisterManager();

@@ -78,11 +78,11 @@ class ViewFrontendController
         require ROOT . '/views/viewAccueil.php';
     }
 
-    public function show500($e)
+    public function show500($error)
     {
         $error = "Il y à eu une erreur !";
         require ROOT . '/views/view500.php';
-        var_dump($e);
+        var_dump($error);
     }
 
 

@@ -33,10 +33,18 @@ class CommentManager extends Manager
 
     public function deleteComment($commentId)
     {
-        $commentId = htmlspecialchars($commentId);
+        $commentIdSafe = htmlspecialchars($commentId);
         $req = $this->db->prepare('DELETE FROM comments WHERE id = ?');
-        $req->execute([$commentId]);
-        
+        $req->execute([$commentIdSafe]);
+
+    }
+
+    public function deleteCommentsFormPost($postId)
+    {
+        $postIdSafe = htmlspecialchars($postId);
+        $req = $this->db->prepare('DELETE FROM comments WHERE post_id = ?');
+        $req->execute([$postIdSafe]);
+
     }
 
     public function updateComment($commentId, $commentContent)

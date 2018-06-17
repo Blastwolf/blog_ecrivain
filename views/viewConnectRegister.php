@@ -8,16 +8,18 @@ ob_start();
             <form class="alt" method="POST" action="index.php?action=connect">
 
                 <label for="user-name">Nom d'utilisateur
-                    :</label><input type="text" name="user-name" required id="user-name">
+                                       :</label><input type="text" name="user-name" required id="user-name" value="<?php if (isset($_POST['user-name'])) {
+                    echo $_POST['user-name'];
+                } ?>">
 
                 <label for="user-pass">Votre mot de passe
-                    :</label><input type="password" name="user-pass" required></br>
+                                       :</label><input type="password" name="user-pass" required></br>
 
                 <input type="submit" name="connect" value="Se connecter">
 
-                <p style="color:red"><?php if (isset($messCon)) {
-                        echo $messCon;
-                    } ?></p>
+                <?php if (isset($messCon)) {
+                    echo '<p class="error-connecte-register">' . $messCon . '</p>';
+                } ?>
             </form>
         </div>
 
@@ -36,9 +38,9 @@ ob_start();
                                                                                     required
                                                                                     id="user-pass-verif"><br/>
                 <input type="submit" name="register">
-                <p style="color:red;"><?php if (isset($messReg)) {
-                        echo $messReg;
-                    } ?></p>
+                <?php if (isset($messReg)) {
+                    echo '<p class="error-connecte-register">' . $messReg . '</p>';
+                } ?>
             </form>
         </div>
     </section>

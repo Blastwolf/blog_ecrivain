@@ -2815,7 +2815,7 @@ input[type="radio"]:focus + label:before {
 
 .image.left {
     float: left;
-    margin: 0 2rem 2rem 0;
+    margin: 0 1rem 1rem 0;
     top: 0.75rem;
 }
 
@@ -4048,7 +4048,6 @@ body.is-loading #intro:not(.hidden) + #header + #nav {
 #main > .posts > article {
     border: 2px solid #eeeeee;
     text-align: center;
-    background-color: lavender;
 }
 
 @media screen and (max-width: 980px) {

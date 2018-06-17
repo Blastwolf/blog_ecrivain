@@ -1,12 +1,12 @@
 <?php
-$title = 'Liste des derniers épisodes';
+$title = 'Une erreur s\'est produite';
 ob_start();
 ?>
-
-<?php if (isset($error)) {
-    echo $error;
-} ?>
-
+    <div class="view500-wrapper">
+        <?php if (isset($error)) {
+            echo ' <p class="view500">' . $error . '</p > ';
+        } ?>
+    </div>
 
 <?php
 $content = ob_get_clean();
