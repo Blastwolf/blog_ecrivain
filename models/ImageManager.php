@@ -13,13 +13,8 @@ class ImageManager extends Manager
 
     private $tabExt = array('jpg', 'gif', 'png', 'jpeg');    // Extensions autorisees
     private $infosImg;
-    private $postManager;
     private $nomImage;
 
-    function __construct()
-    {
-        parent::__construct();
-    }
 
     public function uploadImage()
     {
@@ -31,7 +26,6 @@ class ImageManager extends Manager
         // Recuperation de l'extension du fichier
         $extension = pathinfo($_FILES['fichier']['name'], PATHINFO_EXTENSION);
         // On verifie l'extension du fichier
-        echo $extension;
         if (in_array(strtolower($extension), $this->tabExt)) {
             // On recupere les dimensions du fichier
             $this->infosImg = getimagesize($_FILES['fichier']['tmp_name']);

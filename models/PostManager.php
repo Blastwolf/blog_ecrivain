@@ -32,7 +32,7 @@ class PostManager extends Manager
     public function getLastPost()
     {
         $req = $this->db->query('SELECT *, DATE_FORMAT(creation_date, \'%d/%m/%Y\')
-                            AS creation_date_fr FROM posts ORDER BY creation_date LIMIT 1');
+                            AS creation_date_fr FROM posts ORDER BY creation_date DESC LIMIT 1');
         return $req->fetch();
     }
 

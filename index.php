@@ -1,9 +1,11 @@
 <?php
 session_start();
 define('ROOT', dirname(__FILE__));
+
 require ROOT . '/controllers/ConnectRegisterController.php';
 require ROOT . '/controllers/ViewFrontendController.php';
 require ROOT . '/controllers/ViewBackendController.php';
+
 $connectRegisterController = new ConnectRegisterController();
 $viewFrontendController = new ViewFrontendController();
 
@@ -25,11 +27,13 @@ try {
         } elseif ($_GET['action'] == 'post') {
             if (isset($_POST['postComment'])) {
                 $viewFrontendController->showPostAfterPostComment($_GET['id'], $_SESSION['user'], $_POST['commentContent']);
+            } else {
+                $viewFrontendController->showPost($_GET['id']);
             }
-            $viewFrontendController->showPost($_GET['id']);
         } elseif ($_GET['action'] == 'signaler') {
             $viewFrontendController->showPostAfterReport($_GET['id'], $_GET['postId']);
 //-----------------------------PARTIE CONNECTION--------------------//
+
         } elseif ($_GET['action'] == 'connect') {
             if (isset($_POST['register'])) {
                 $connectRegisterController->addUser($_POST['user-name-register'], $_POST['user-pass-register'], $_POST['user-pass-register-verif']);
@@ -71,7 +75,7 @@ try {
                 if (isset($_POST['moderate'])) {
                     $viewBackendController->moderateComment($_GET['id'], $_POST['moderatedComment']);
                 } else {
-                    $viewBackendController->showEditComment($_GET['id'], $_GET['nbPagePost'], $_GET['nbPageComment']);
+                    $viewBackendController->showEditComment($_GET['id']);
                 }
             } elseif ($_GET['action'] == 'deleteComment') {
                 $viewBackendController->deleteComment($_GET['id']);

@@ -1,5 +1,5 @@
 tinymce.init({
-    selector: '#mytextarea',
+    selector: '#tinyMCE',
     height: 300
 
 });

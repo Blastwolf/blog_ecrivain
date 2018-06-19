@@ -39,7 +39,8 @@ class CommentManager extends Manager
 
     }
 
-    public function deleteCommentsFormPost($postId)
+    //method pour la suppression des commentaires lié a un post lorsque l'on supprime le post
+    public function deleteCommentsFromPost($postId)
     {
         $postIdSafe = htmlspecialchars($postId);
         $req = $this->db->prepare('DELETE FROM comments WHERE post_id = ?');

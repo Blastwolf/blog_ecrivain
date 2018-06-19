@@ -3,10 +3,12 @@ $title = $post['title'];
 ob_start();
 ?>
     <article class="post featured">
+
         <header class="major">
             <span class="date"><?= $post['creation_date_fr'] ?></span>
             <h2><a href="#"><?= $post['title'] ?></a></h2>
         </header>
+
         <div>
             <?= $post['content'] ?>
         </div>
@@ -17,7 +19,9 @@ ob_start();
         <?php if (isset($this->message)) {
             echo '<p id="success">' . $this->message . '</p>';
         } ?>
+
         <h3>Commentaires :</h3>
+
         <?php foreach ($data as $value) {
             ?>
             <div class="comment">
@@ -30,7 +34,9 @@ ob_start();
                         }
                     }
                     ?></p>
+
                 <blockquote><?= $value['content'] ?></blockquote>
+
             </div>
             <?php
         }
@@ -40,8 +46,11 @@ ob_start();
         <h3>Poster un commentaire :</h3>
         <?php if (isset($_SESSION['user'])) { ?>
             <form class="commentForm" method="POST" action="index.php?action=post&amp;id=<?= $post['id'] ?>#comments">
+
                 <textarea name="commentContent" placeholder="Ecrivez votre commentaire ici" required></textarea>
+
                 <input type="submit" name="postComment" value="Poster !">
+
             </form>
         <?php } else {
             echo '<p>' . 'Vous devez être connecté pour poster un message.' . '</p>';

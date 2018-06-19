@@ -97,18 +97,16 @@ class ViewBackendController
         $post = $this->postManager->getPost($postId);
         $this->postManager->deletePost($postId);
         $this->ImageManager->deleteImage($post['image_name']);
-        $this->commentManager->deleteCommentsFormPost($postId);
+        $this->commentManager->deleteCommentsFromPost($postId);
         $this->message = 'Episode supprimé !';
         $this->showBackend();
     }
 
-    public function showEditComment($commentId, $currentPageNumberPost, $currentPageNumberComment)
+    public function showEditComment($commentId)
     {
-        $currentPagePost = ($currentPageNumberPost - 1) * 4;
-        $currentPageComment = ($currentPageNumberComment - 1) * 5;
 
-        $posts = $this->postManager->getPosts($currentPagePost);
-        $comments = $this->commentManager->getReportedComments($currentPageComment);
+        $posts = $this->postManager->getPosts($this->currentPageNumberPost);
+        $comments = $this->commentManager->getReportedComments($this->currentPageNumberComment);
         $moderateComment = $this->commentManager->getComment($commentId);
 
         require ROOT . '/views/backend/viewBackend.php';

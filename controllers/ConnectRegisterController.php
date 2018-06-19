@@ -18,7 +18,7 @@ class ConnectRegisterController
         $result = $this->connectRegisterManager->getUserDetails($userName);
         $isPasswordCorrect = password_verify($password, $result['pass']);
         if ($isPasswordCorrect && $this->connectRegisterManager->validUser($userName)) {
-            $_SESSION['user'] = $userName;
+            $_SESSION['user'] = htmlspecialchars($userName);
             $this->viewFrontendController->showAccueil();
         } else {
             $messCon = 'Combinaison mot de passe/utilisateur incorrect';

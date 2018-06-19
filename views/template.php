@@ -38,10 +38,13 @@
                 }
                 echo '<li class="' . $active . '"><a href="index.php?action=admin&amp;nbPagePost=1&amp;nbPageComment=1">Administration</a></li>';
             } ?>
+
             <li class=""><a href="index.php">Accueil</a></li>
+
             <li class="<?php if ($_GET['action'] == 'posts' OR $_GET['action'] == 'post' OR $_GET['action'] == 'signaler') {
                 echo 'active';
             } ?>"><a href="index.php?action=posts&amp;nbPage=1">Episodes</a></li>
+
             <li class="<?php if ($_GET['action'] == 'connect') {
                 echo 'active';
             } ?>"><?php if (isset($_SESSION['user'])) {
@@ -50,10 +53,10 @@
                     echo '<a href="index.php?action=connect">Connexion</a>';
                 } ?></li>
         </ul>
+        <?php if (isset($_SESSION['user'])) {
+            echo '<span class="connected">Bienvenue : <strong>' . $_SESSION['user'] . '</strong></span>';
+        } ?>
         <ul class="icons">
-            <?php if (isset($_SESSION['user'])) {
-                echo '<li>Bienvenue : <strong>' . $_SESSION['user'] . '</strong></li>';
-            } ?>
             <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
             <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
             <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
@@ -117,8 +120,8 @@
     <!-- Copyright -->
     <div id="copyright">
         <ul>
-            <li>&copy; Untitled</li>
-            <li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+            <li>Par Benjamin JANEL</li>
+            <li>Formation Openclassrooms Développeur Web Junior </a></li>
         </ul>
     </div>
 
@@ -133,7 +136,7 @@
 <script src="public/assets/js/main.js"></script>
 <script src="public/plugins/tinymce/tinymce.min.js"></script>
 <script src="public/js/init_tinymce.js" type="text/javascript"></script>
-<script src="public/js/active.js"></script>
+<script src="public/js/message.js"></script>
 
 </body>
 </html>

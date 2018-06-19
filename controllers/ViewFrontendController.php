@@ -82,7 +82,6 @@ class ViewFrontendController
     {
         $error = "Il y à eu une erreur !";
         require ROOT . '/views/view500.php';
-        var_dump($error);
     }
 
 

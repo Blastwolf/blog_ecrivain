@@ -4,7 +4,7 @@ ob_start();
 ?>
     <div class="view500-wrapper">
         <?php if (isset($error)) {
-            echo ' <p class="view500">' . $error . '</p > ';
+            echo '<p class="view500">' . $error . '</p>';
         } ?>
     </div>
 
