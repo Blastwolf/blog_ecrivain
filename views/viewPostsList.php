@@ -11,7 +11,7 @@ ob_start();
                     <h2><a href="index.php?action=post&amp;id=<?= $data['id'] ?>"><?= $data['title'] ?></a></h2>
                 </header>
 
-                <a href="index.php?action=post&amp;id=<?= $data['id'] ?>" class="image fit"><img src="public/images/thumbnails/<?= $data['image_name'] ?>" alt=""></a>
+                <a href="index.php?action=post&amp;id=<?= $data['id'] ?>" class="image fit"><img src="public/images/thumbnails/<?= $data['image_name'] ?>" alt="<?= $data['image_name'] ?>"></a>
 
                 <div>
                     <?= substr($data['content'], 0, 400) ?>

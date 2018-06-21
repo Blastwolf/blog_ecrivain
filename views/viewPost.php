@@ -35,7 +35,7 @@ ob_start();
                     }
                     ?></p>
 
-                <blockquote><?= $value['content'] ?></blockquote>
+                <p><i><?= $value['content'] ?></i></p>
 
             </div>
             <?php

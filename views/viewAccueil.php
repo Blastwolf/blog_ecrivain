@@ -9,6 +9,12 @@
     <title>Jean Forteroche</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+
+    <meta property="og:title" content="Jean Forteroche <Billet simple pour l'Alaska>"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:url" content="http://benjaminjanel.tk/blog_ecrivain/index.php"/>
+    <meta property="og:image" content="http://benjaminjanel.tk/blog_ecrivain/public/images/global/night_bg.jpg"/>
+
     <link rel="stylesheet" href="public/assets/css/main.css"/>
     <link rel="stylesheet" href="public/assets/css/style.css"/>
     <noscript>
@@ -92,7 +98,7 @@
             <header class="major">
                 <span class="date"><?= $post['creation_date_fr'] ?></span>
                 <h2><a href="#"><?= $post['title'] ?></a></h2>
-                <span class="image fit"><img src="public/images/thumbnails/<?= $post['image_name'] ?>" alt=""></span>
+                <span class="image fit"><img src="public/images/thumbnails/<?= $post['image_name'] ?>" alt="<?= $post['image_name'] ?>"></span>
             </header>
 
             <div>

@@ -9,10 +9,8 @@ ob_start(); ?>
 } ?>
     <div class="backendPosts">
 
-        <h3 class="backend-Section-Title">Liste des épisodes :
-            <span class="addPost"><a href="index.php?action=addPost&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] ?>">Ajouter un épisode</a></span>
+        <h3 class="backend-Section-Title">Liste des épisodes :<span class="addPost"><a href="index.php?action=addPost&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] ?>">Ajouter un épisode</a></span>
         </h3>
-
         <div class="table-wrapper">
             <table>
                 <thead>
@@ -82,7 +80,7 @@ ob_start(); ?>
                     </form>
 
                 <?php } else { ?>
-                    <blockquote><?= $comment['content'] ?></blockquote>
+                    <p><i><?= $comment['content'] ?></i></p>
                 <?php } ?>
 
             </div>

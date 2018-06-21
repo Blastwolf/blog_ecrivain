@@ -3,7 +3,7 @@
 class ImageManager extends Manager
 {
 // Constantes
-    const TARGET = ROOT . '/Public/images/thumbnails/';    // Repertoire cible
+    const TARGET = ROOT . '/public/images/thumbnails/';    // Repertoire cible
     const MAX_SIZE = 5242880;    // Taille max en octets du fichier
     const WIDTH_MAX = 10000;    // Largeur max de l'image en pixels
     const HEIGHT_MAX = 10000;    // Hauteur max de l'image en pixels

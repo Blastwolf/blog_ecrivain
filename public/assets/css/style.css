@@ -63,9 +63,16 @@
     border: 1px solid #eeeeee;
 }
 
-.comment p, blockquote {
+.comment p {
 
     margin: 1rem auto auto;
+}
+
+.comment p i {
+    display: block;
+    padding: 10px;
+
+    border-left: 1px solid grey;
 }
 
 .comment-sign {
@@ -73,9 +80,22 @@
     color: green;
 }
 
+@media screen and (max-width: 480px) {
+    .comments {
+        padding: 0px;
+    }
+
+    .comment {
+        padding: 0px;
+        margin: 0px;
+        width: 100%;
+    }
+}
+
 /*---------------------------------------------------------------*/
 /*------------------------------Administration-----------------*/
 .addPost {
+    display: block;
     float: right;
     color: blue;
 }

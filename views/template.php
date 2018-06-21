@@ -9,6 +9,19 @@
     <title><?= $title ?></title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+
+    <meta property="og:title" content="<?= $title ?>"/>
+    <?php if (isset($_GET['action']) && $_GET['action'] == 'posts') {
+        echo '<meta property="og:url" content="http://benjaminjanel.tk/blog_ecrivain/index.php?action=posts&nbPage=1"/>';
+        echo '<meta property="og:description" content="Venez découvrir la liste des épisodes du roman de Jean Forteroche <Billet simple pour l\'Alaska>">';
+        echo '<meta property="og:image" content="http://benjaminjanel.tk/blog_ecrivain/public/images/global/night_bg.jpg"/>';
+    } elseif (isset($_GET['action']) && $_GET['action'] == 'post') {
+        echo '<meta property="og:image" content="http://benjaminjanel.tk/blog_ecrivain/public/images/thumbnails/' . $post['image_name'] . '"/>';
+        echo '<meta property="og:description" content="Venez lire l\'épisode complet <' . $title . '> sur le site de Jean Forteroche">';
+    } ?>
+    <meta property="og:title" content="Jean Forteroche <Billet simple pour l'Alaska>"/>
+    <meta property="og:type" content="article"/>
+
     <link rel="stylesheet" href="public/assets/css/main.css"/>
     <link rel="stylesheet" href="public/assets/css/style.css"/>
     <noscript>

@@ -5,14 +5,13 @@ ob_start(); ?>
         <?php if (isset($this->error)) {
             echo '<p id="error">' . $this->error . '</p>';
         } ?>
-        <form method="POST" action="index.php?action=editPost&amp;id=<?= $post['id']; ?>&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] ?>" enctype="multipart/form-data">
+        <form class="alt" method="POST" action="index.php?action=editPost&amp;id=<?= $post['id']; ?>&amp;nbPagePost=<?= $_GET['nbPagePost'] ?>&amp;nbPageComment=<?= $_GET['nbPageComment'] ?>" enctype="multipart/form-data">
 
-            <label for="editPostTitle">Titre de l'article :</label><input type="text" name="editPostTitle" class="mytextarea" required value="
-            <?php if (isset($post)) {
+            <label for="editPostTitle">Titre de l'article :</label><input type="text" name="editPostTitle" class="mytextarea" required value="<?php if (isset($post)) {
                 echo htmlspecialchars($post["title"]);
-            } ?>">
+            } ?>"><br/>
 
-            <label for="fichier_a_uploader" title="Recherchez le fichier à uploader !">Choisissez un image miniature pour l'épisode :</label>
+            <label for="fichier_a_uploader" title="Recherchez le fichier à uploader !">Changer l'image miniature pour l'épisode ?(jpg,gif,png,jpeg) :</label>
             <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo ImageManager::MAX_SIZE; ?>"/>
             <input name="fichier" type="file" id="fichier_a_uploader"/>
 
